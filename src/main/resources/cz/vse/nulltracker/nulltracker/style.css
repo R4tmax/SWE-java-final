@@ -1,8 +1,7 @@
 .root {
-    -fx-background-color: #ffffff;
+    -fx-background-color: #FF0000;
 }
 
 #header {
-    -fx-background-color: #0000FF;
-    -fx-background-radius: 0px;
+    -fx-background-color: #FF0000;
 }
