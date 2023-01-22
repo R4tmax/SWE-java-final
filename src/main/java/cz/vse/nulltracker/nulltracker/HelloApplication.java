@@ -19,7 +19,9 @@ public class HelloApplication extends Application {
     }
 
     public static void main(String[] args) {
-        DatabaseHandler.DBtest();
+        DatabaseHandler.DBtestInit();
+        DatabaseHandler.DBinsertionTest();
+        System.exit(0);
        //launch();
     }
 }
