@@ -32,8 +32,8 @@ public class DatabaseHandler {
             database = mongoClient.getDatabase("NullTracerkerDevDB");
             MongoCollection<Document> collection = database.getCollection("users");
 
-            Document document = new Document("login", "dbtesting1")
-                    .append("password", "11115");
+            Document document = new Document("login", "dbtesting2")
+                    .append("password", "A11115");
 
             collection.insertOne(document);
             ObjectId objectId = document.getObjectId("_id");
