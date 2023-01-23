@@ -29,5 +29,12 @@ side note: Momentálně je povolen direct push do DEVu, zamknu ho až budou mít
 lokální kopie repa, POTÉ POUZE MERGE
 
 ## Práce s DBS
-TBD
+- Použitá DB -> **MongoDB** (Použítý Java Sync Driver - verze 4.8.x)
+- Bližší info viz. Wiki TBD
+- Abstrakce SQL příkazů probíhá incode pomocí metod a objektů natáhlých z driveru viz. https://l.facebook.com/l.php?u=https%3A%2F%2Fwww.mongodb.com%2Fdocs%2Fmanual%2Ftutorial%2F%3Ffbclid%3DIwAR01GRkaEJ33j_SvbXWfuDn1l-lY_krS10NlMfpacTAn3dKYZFFErs1z6jo&h=AT255vnaVT_eZMDGhoVnxTN86hY4_vsbG_-VbyirtPniNmGQYk3kPpkGswF_cK3sabOQRl8OaHyPgJwlMi6tJaDz67Ub4-QGTpoPl3Xgko7m_CGJgdyMZ27Jxsm39bvgKiPiKZoyGJWErb21QWw
+- Práce s Mongo commandy mimo Try-Catch blok se nedoporučuje, IDEA (Ultimate) bude tohle vracet jako warning
+- Data lze accessnout remote v MongoDB Atlas webadminu, práce přes code vyžaduje otevření konexe pomocí ConnectionURI, která je předefinovaná na *martin_dev* usera a je open na všechny IP
+- Kapacita uložiště je 512 MB
+
+
 
