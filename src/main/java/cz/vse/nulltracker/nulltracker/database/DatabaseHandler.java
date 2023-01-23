@@ -8,7 +8,6 @@ import org.bson.types.ObjectId;
 
 public class DatabaseHandler {
 
-
     public static void DBtestInit () {
 
         ConnectionString connectionString = new ConnectionString("mongodb+srv://martin_dev:wahB7g4jjP2CCJ7@nulltrackerdev.nxwgnwc.mongodb.net/?retryWrites=true&w=majority");
@@ -41,9 +40,22 @@ public class DatabaseHandler {
 
             System.out.println("Created user:" + objectId);
         }
+    }
 
+    public static void DBdocumentReadTest () {
+            ConnectionString connectionString = new ConnectionString("mongodb+srv://martin_dev:wahB7g4jjP2CCJ7@nulltrackerdev.nxwgnwc.mongodb.net/?retryWrites=true&w=majority");
+            MongoDatabase database;
 
-
+             try (MongoClient mongoClient = MongoClients.create(connectionString)) {
+                 database = mongoClient.getDatabase("NullTracerkerDevDB");
+                 MongoCollection<Document> collection = database.getCollection("users");
+                 FindIterable<Document> findIterable = collection.find(new Document());
+                 try (MongoCursor<Document> cursor = findIterable.cursor()) {
+                     while (cursor.hasNext()) {
+                         System.out.println(cursor.next());
+                     }
+                }
+            }
     }
 
 }

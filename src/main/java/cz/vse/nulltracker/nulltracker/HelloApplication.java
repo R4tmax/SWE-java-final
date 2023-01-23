@@ -20,7 +20,8 @@ public class HelloApplication extends Application {
 
     public static void main(String[] args) {
         DatabaseHandler.DBtestInit();
-        DatabaseHandler.DBinsertionTest();
+        //DatabaseHandler.DBinsertionTest();
+        DatabaseHandler.DBdocumentReadTest();
         System.exit(0);
        //launch();
     }
