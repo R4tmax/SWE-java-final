@@ -1,7 +1,9 @@
 module cz.vse.nulltracker.nulltracker {
     requires javafx.controls;
     requires javafx.fxml;
-    requires mongo.java.driver;
+    requires org.mongodb.driver.core;
+    requires org.mongodb.driver.sync.client;
+    requires org.mongodb.bson;
 
 
     opens cz.vse.nulltracker.nulltracker to javafx.fxml;
