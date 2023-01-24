@@ -1,6 +1,6 @@
 .root {
     -fx-background-color: #ffffff;
-    -fx-font-family: "Helvetica", sans-serif;
+    -fx-font-family: "Inter", sans-serif;
 }
 
 #header {
@@ -10,6 +10,17 @@
 
 .h1 {
     -fx-font-size: 40px;
+    -fx-font-weight: 700;
+}
+
+.h2 {
+    -fx-font-size: 30px;
+    -fx-font-weight: 700;
+}
+
+.h3 {
+    -fx-font-size: 25px;
+    -fx-font-weight: 700;
 }
 
 .text-field {
