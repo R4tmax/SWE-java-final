@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
@@ -51,11 +52,16 @@
                         <Font name="Inter Extra Bold" size="40.0" />
                      </font>
                   </Text>
-                  <TextField promptText="Jméno"  fx:id="nameInput"/>
-                  <TextField promptText="Email" fx:id="emailInput"/>
-                  <PasswordField promptText="Heslo" fx:id="passwordFirstInput"/>
-                  <PasswordField promptText="Heslo znovu" fx:id="passwordSecondInput"/>
-                  <Button mnemonicParsing="false" text="Potvrdit" fx:id="confirmButton" />
+                  <TextField fx:id="nameInput" promptText="Jméno" />
+                  <TextField fx:id="emailInput" promptText="Email" />
+                  <PasswordField fx:id="passwordFirstInput" promptText="Heslo" />
+                  <PasswordField fx:id="passwordSecondInput" promptText="Heslo znovu" />
+                  <Button fx:id="submitButton" mnemonicParsing="false" text="Potvrdit" />
+                  <Hyperlink text="Máš už účet? Přihlaš se" onAction="#linkToLogin">
+                     <VBox.margin>
+                        <Insets top="60.0" />
+                     </VBox.margin>
+                  </Hyperlink>
                </children>
                <GridPane.margin>
                   <Insets />
