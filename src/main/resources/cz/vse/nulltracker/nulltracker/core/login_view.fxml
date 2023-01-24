@@ -44,13 +44,11 @@
             </ImageView>
             <VBox maxHeight="-Infinity" maxWidth="-Infinity" spacing="14.0" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                <children>
-                  <Text lineSpacing="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Přihlášení">
+                  <Text lineSpacing="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Přihlášení" styleClass="h1">
                      <VBox.margin>
                         <Insets bottom="56.0" />
                      </VBox.margin>
-                     <font>
-                        <Font name="Inter Extra Bold" size="40.0" />
-                     </font>
+
                   </Text>
                   <TextField promptText="Email" fx:id="emailInput" />
                   <PasswordField promptText="Heslo" fx:id="passwordInput" />
