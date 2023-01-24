@@ -6,8 +6,5 @@ module cz.vse.nulltracker.nulltracker {
     requires org.mongodb.bson;
 
     opens cz.vse.nulltracker.nulltracker.core to javafx.fxml;
-    opens cz.vse.nulltracker.nulltracker.ui to javafx.fxml;
     exports cz.vse.nulltracker.nulltracker.core;
-    exports cz.vse.nulltracker.nulltracker.ui;
-
 }

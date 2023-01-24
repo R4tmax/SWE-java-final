@@ -1,18 +1,16 @@
 package cz.vse.nulltracker.nulltracker.core;
 
-import cz.vse.nulltracker.nulltracker.database.DatabaseHandler;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import java.util.Objects;
-
 public class Main extends Application {
-    private Stage stage;
+    private static Stage stage;
     private Scene login_scene;
     private Scene registration_scene;
     private Scene dashboard_scene;
+    private Scene allExercises_scene;
 
     public static void main(String[] args) {
         //DatabaseHandler.DBtestInit();
@@ -22,27 +20,33 @@ public class Main extends Application {
     }
 
     @Override
-    public void start(Stage stage) throws Exception {
-        FXMLLoader loader = new FXMLLoader();
+    public void start(Stage primaryStage) throws Exception {
+        stage = primaryStage;
 
         login_scene = new Scene(FXMLLoader.load(getClass().getResource("login_view.fxml")), 1200, 800);
         registration_scene = new Scene(FXMLLoader.load(getClass().getResource("registration_view.fxml")));
         dashboard_scene = new Scene(FXMLLoader.load(getClass().getResource("dashboard_view.fxml")));
+        allExercises_scene = new Scene(FXMLLoader.load(getClass().getResource("allExercises_view.fxml")));
 
+        stage.setUserData(this);
         stage.setScene(login_scene);
         stage.setTitle("Null Tracker");
         stage.show();
     }
 
-    public void navigateToRegister() {
-        stage.setScene(registration_scene);
+    public static Stage getStage() {
+        return stage;
     }
 
-    public void navigateToLogin() {
-        stage.setScene(login_scene);
-    }
+    public void navigateTo(String desiredLocation) {
+        switch (desiredLocation) {
+            case "allExercises" -> stage.setScene(allExercises_scene);
+            case "dashboard" -> stage.setScene(dashboard_scene);
+            case "login" -> stage.setScene(login_scene);
+            case "registration" -> stage.setScene(registration_scene);
+//            case "community" -> stage.setScene(community_scene);
 
-    public void navigateToDashboard() {
-        stage.setScene(dashboard_scene);
+            default -> System.out.println("No such link");
+        }
     }
 }
