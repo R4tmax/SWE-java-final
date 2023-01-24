@@ -8,7 +8,7 @@ import javafx.stage.Stage;
 
 public class HeaderController {
     public Hyperlink allExercisesLink;
-    private Stage stage = Main.getStage();
+    private final Stage stage = Main.getStage();
 
 
 
@@ -19,21 +19,6 @@ public class HeaderController {
         String data = (String) node.getUserData();
         Main main = (Main) stage.getUserData();
         System.out.println(data);
-        switch (data) {
-            case "allExercises":
-                main.navigateToAllExercises();
-                break;
-            case "dashboard":
-                main.navigateToDashboard();
-                break;
-            case "login":
-                main.navigateToLogin();
-                break;
-            case "register":
-                main.navigateToRegister();
-                break;
-            default:
-                System.out.println("No such link");
-        }
+        main.navigateTo(data);
     }
 }

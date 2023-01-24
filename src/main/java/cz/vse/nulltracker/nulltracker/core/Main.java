@@ -21,7 +21,6 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        FXMLLoader loader = new FXMLLoader();
         stage = primaryStage;
 
         login_scene = new Scene(FXMLLoader.load(getClass().getResource("login_view.fxml")), 1200, 800);
@@ -30,7 +29,7 @@ public class Main extends Application {
         allExercises_scene = new Scene(FXMLLoader.load(getClass().getResource("allExercises_view.fxml")));
 
         stage.setUserData(this);
-        stage.setScene(dashboard_scene);
+        stage.setScene(login_scene);
         stage.setTitle("Null Tracker");
         stage.show();
     }
@@ -39,19 +38,15 @@ public class Main extends Application {
         return stage;
     }
 
-    public void navigateToRegister() {
-        stage.setScene(registration_scene);
-    }
+    public void navigateTo(String desiredLocation) {
+        switch (desiredLocation) {
+            case "allExercises" -> stage.setScene(allExercises_scene);
+            case "dashboard" -> stage.setScene(dashboard_scene);
+            case "login" -> stage.setScene(login_scene);
+            case "registration" -> stage.setScene(registration_scene);
+//            case "community" -> stage.setScene(community_scene);
 
-    public void navigateToLogin() {
-        stage.setScene(login_scene);
-    }
-
-    public void navigateToDashboard() {
-        stage.setScene(dashboard_scene);
-    }
-
-    public void navigateToAllExercises() {
-        stage.setScene(allExercises_scene);
+            default -> System.out.println("No such link");
+        }
     }
 }
