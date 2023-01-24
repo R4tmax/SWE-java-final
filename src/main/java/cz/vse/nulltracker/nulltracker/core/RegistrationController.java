@@ -78,6 +78,8 @@ public class RegistrationController {
 
             System.out.println("Created user:" + objectId);
 
+            linkToLogin();
+
         }
     }
 
