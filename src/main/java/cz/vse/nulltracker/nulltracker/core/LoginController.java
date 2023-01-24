@@ -29,6 +29,12 @@ public class LoginController {
         main.navigateTo("registration");
     }
 
+    @FXML
+    private void linkToDashboard() {
+        Main main = (Main) stage.getUserData();
+        main.navigateTo("dashboard");
+    }
+
     public void attemptLogin() {
 
         String login = emailInput.getText();
@@ -50,7 +56,10 @@ public class LoginController {
             } else {
                 if(!Objects.equals(entry.getString("password"), pass)) {
                     System.out.println("Incorrect password");
-                } else System.out.println("Login successful!");
+                } else {
+                    System.out.println("Login successful!");
+                    linkToDashboard();
+                }
             }
 
         }
