@@ -54,7 +54,7 @@
                   </Text>
                   <TextField promptText="Email" fx:id="emailInput" />
                   <PasswordField promptText="Heslo" fx:id="passwordInput" />
-                  <Button mnemonicParsing="false" text="Potvrdit" fx:id="submitButton" />
+                  <Button mnemonicParsing="false" text="Potvrdit" fx:id="submitButton" onMouseClicked="#attemptLogin" />
                   <Hyperlink text="Nemáš účet? Založ si ho tady." onAction="#linkToRegistration">
                      <VBox.margin>
                         <Insets top="60.0" />

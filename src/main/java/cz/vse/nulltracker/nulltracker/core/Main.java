@@ -5,6 +5,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.util.Objects;
+
 public class Main extends Application {
     private static Stage stage;
     private Scene login_scene;
@@ -23,10 +25,10 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         stage = primaryStage;
 
-        login_scene = new Scene(FXMLLoader.load(getClass().getResource("login_view.fxml")), 1200, 800);
-        registration_scene = new Scene(FXMLLoader.load(getClass().getResource("registration_view.fxml")));
-        dashboard_scene = new Scene(FXMLLoader.load(getClass().getResource("dashboard_view.fxml")));
-        allExercises_scene = new Scene(FXMLLoader.load(getClass().getResource("allExercises_view.fxml")));
+        login_scene = new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("login_view.fxml"))), 1200, 800);
+        registration_scene = new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("registration_view.fxml"))));
+        dashboard_scene = new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("dashboard_view.fxml"))));
+        allExercises_scene = new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("allExercises_view.fxml"))));
 
         stage.setUserData(this);
         stage.setScene(login_scene);
