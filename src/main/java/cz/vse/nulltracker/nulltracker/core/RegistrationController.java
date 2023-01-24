@@ -58,6 +58,12 @@ public class RegistrationController {
                 return;
             }
 
+            if (!isPassSafe(pass)) {
+                System.out.println("Password is not safe enough");
+                System.out.println("Password should contain at least 4 characters, one number and one letter");
+                return;
+            }
+
 
             Document document = new Document("login", login)
                     .append("password", pass).append("name", name);
@@ -68,6 +74,27 @@ public class RegistrationController {
             System.out.println("Created user:" + objectId);
 
         }
+    }
+
+
+    private boolean isPassSafe (String passToCheck) {
+
+        boolean hasDigit = false;
+        boolean hasLetter = false;
+
+        if (passToCheck.length() <= 4) return false;
+
+        for (char c : passToCheck.toCharArray()) {
+            if (Character.isDigit(c)) hasDigit = true;
+        }
+
+        if (!hasDigit) return false;
+
+        for (char c : passToCheck.toCharArray()) {
+            if (Character.isLetter(c)) hasLetter = true;
+        }
+
+        return hasLetter;
     }
 
 
