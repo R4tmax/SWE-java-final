@@ -1,8 +1,29 @@
 .root {
     -fx-background-color: #ffffff;
+    -fx-font-family: "Helvetica", sans-serif;
 }
 
 #header {
     -fx-background-color: #0000FF;
     -fx-background-radius: 0px;
+}
+
+.h1 {
+    -fx-font-size: 40px;
+}
+
+.text-field {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #000000;
+    -fx-border-width: 1px;
+    -fx-pref-width: 340px;
+    -fx-padding: 10px 17px;
+    -fx-border-radius: 7px;
+}
+
+.button {
+    -fx-background-color: #000000;
+    -fx-background-radius: 7px;
+    -fx-text-fill: #ffffff;
+    -fx-padding: 10px 17px;
 }
