@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
 
-<HBox alignment="TOP_CENTER" maxHeight="50.0" prefHeight="50.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<HBox alignment="TOP_CENTER" maxHeight="50.0" prefHeight="50.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cz.vse.nulltracker.nulltracker.core.HeaderController">
    <children>
       <HBox alignment="CENTER_LEFT" maxWidth="1060.0" minHeight="-Infinity" prefHeight="50.0" prefWidth="1060.0">
          <children>
@@ -17,8 +17,8 @@
                </image>
             </ImageView>
             <Region minWidth="30.0" prefHeight="50.0" prefWidth="0.0" HBox.hgrow="ALWAYS" />
-            <Hyperlink text="Dashboard" textFill="WHITE" />
-            <Hyperlink layoutX="116.0" layoutY="10.0" text="Všechna cvičení" textFill="WHITE">
+            <Hyperlink text="Dashboard" textFill="WHITE"  onAction="#linkTo" userData="dashboard"/>
+            <Hyperlink layoutX="116.0" layoutY="10.0" text="Všechna cvičení" textFill="WHITE" fx:id="allExercisesLink" onAction="#linkTo" userData="allExercises">
                <HBox.margin>
                   <Insets left="48.0" right="48.0" />
                </HBox.margin></Hyperlink>
