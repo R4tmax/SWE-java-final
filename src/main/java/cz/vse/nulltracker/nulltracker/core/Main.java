@@ -13,7 +13,7 @@ public class Main extends Application {
     private Scene registration_scene;
     private Scene dashboard_scene;
     private Scene allExercises_scene;
-
+    private Scene newWorkout_scene;
     public static void main(String[] args) {
         //DatabaseHandler.DBtestInit();
         //DatabaseHandler.DBinsertionTest();
@@ -29,12 +29,13 @@ public class Main extends Application {
         registration_scene = new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("registration_view.fxml"))));
         dashboard_scene = new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("dashboard_view.fxml"))));
         allExercises_scene = new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("allExercises_view.fxml"))));
+        newWorkout_scene = new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("newWorkout_view.fxml"))));
 
         stage.setUserData(this);
         stage.setWidth(1200);
         stage.setHeight(800);
         stage.setScene(login_scene);
-        stage.setTitle("Null Tracker");
+        stage.setTitle("NullTracker");
         stage.show();
     }
 
@@ -50,6 +51,7 @@ public class Main extends Application {
             case "dashboard" -> stage.setScene(dashboard_scene);
             case "login" -> stage.setScene(login_scene);
             case "registration" -> stage.setScene(registration_scene);
+            case "newWorkout" -> stage.setScene(newWorkout_scene);
 //            case "community" -> stage.setScene(community_scene);
 
             default -> System.out.println("No such link");

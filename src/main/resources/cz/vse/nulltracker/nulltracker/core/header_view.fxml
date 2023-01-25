@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -11,14 +12,17 @@
    <children>
       <HBox alignment="CENTER_LEFT" maxWidth="1060.0" minHeight="-Infinity" prefHeight="50.0" prefWidth="1060.0">
          <children>
-            <ImageView fitHeight="18.0" fitWidth="106.0" pickOnBounds="true" preserveRatio="true" HBox.hgrow="NEVER">
+            <ImageView fitHeight="18.0" fitWidth="106.0" onMouseClicked="#linkToHome" pickOnBounds="true" preserveRatio="true" HBox.hgrow="NEVER">
                <image>
-                  <Image url="@Null Tracker_white.png" />
+                  <Image url="@icons/Null Tracker_white.png" />
                </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </ImageView>
             <Region minWidth="30.0" prefHeight="50.0" prefWidth="0.0" HBox.hgrow="ALWAYS" />
-            <Hyperlink text="Dashboard" textFill="WHITE"  onAction="#linkTo" userData="dashboard"/>
-            <Hyperlink layoutX="116.0" layoutY="10.0" text="Všechna cvičení" textFill="WHITE" fx:id="allExercisesLink" onAction="#linkTo" userData="allExercises">
+            <Hyperlink onAction="#linkTo" text="Dashboard" textFill="WHITE" userData="dashboard" />
+            <Hyperlink fx:id="allExercisesLink" layoutX="116.0" layoutY="10.0" onAction="#linkTo" text="Všechna cvičení" textFill="WHITE" userData="allExercises">
                <HBox.margin>
                   <Insets left="48.0" right="48.0" />
                </HBox.margin></Hyperlink>
