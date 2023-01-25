@@ -1,6 +1,8 @@
 package cz.vse.nulltracker.nulltracker.core;
 
+import com.mongodb.ConnectionString;
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
 import cz.vse.nulltracker.nulltracker.database.LoggedUser;
 import javafx.fxml.FXML;
@@ -60,8 +62,7 @@ public class LoginController {
             return;
         }
 
-        ConnectionString connectionString = new ConnectionString("mongodb+srv://martin_dev:wahB7g4jjP2CCJ7@nulltrackerdev.nxwgnwc.mongodb.net/?retryWrites=true&w=majority");
-        MongoDatabase database;
+
 
         try  {
             MongoCollection<Document> collection = database.getCollection("users");
