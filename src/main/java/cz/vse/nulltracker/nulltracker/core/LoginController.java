@@ -1,14 +1,9 @@
 package cz.vse.nulltracker.nulltracker.core;
 
-import com.mongodb.ConnectionString;
-import com.mongodb.client.MongoClient;
-import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
-import javafx.event.ActionEvent;
+import cz.vse.nulltracker.nulltracker.database.LoggedUser;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -18,6 +13,17 @@ import org.bson.conversions.Bson;
 
 import java.util.Objects;
 
+import static cz.vse.nulltracker.nulltracker.database.DatabaseHandler.database;
+
+/**
+ * @author Martin Kadlec, Michal Průcha
+ * @version Last refactor 25.1
+ * <p>
+ * Controller for the login_view FXML file.
+ * It is the first screen opened upon program launch.</p>
+ *
+ * @see cz.vse.nulltracker.nulltracker.database.DatabaseHandler
+ */
 public class LoginController {
     public Button submitButton;
     public TextField emailInput;
@@ -35,16 +41,20 @@ public class LoginController {
         main.navigateTo("dashboard");
     }
 
+    /**
+     * Accepts text values from the related fields
+     * and interprets them against the contents of the "users"
+     * collection. Call to the DB is made via DatabaseHandler client
+     *
+     * @see cz.vse.nulltracker.nulltracker.database.DatabaseHandler
+     */
     public void attemptLogin() {
 
         String login = emailInput.getText();
         String pass = passwordInput.getText();
 
-        ConnectionString connectionString = new ConnectionString("mongodb+srv://martin_dev:wahB7g4jjP2CCJ7@nulltrackerdev.nxwgnwc.mongodb.net/?retryWrites=true&w=majority");
-        MongoDatabase database;
 
-        try (MongoClient mongoClient = MongoClients.create(connectionString)) {
-            database = mongoClient.getDatabase("NullTracerkerDevDB");
+        try  {
             MongoCollection<Document> collection = database.getCollection("users");
 
             Bson filter = Filters.regex("login", login);
@@ -58,10 +68,13 @@ public class LoginController {
                     System.out.println("Incorrect password");
                 } else {
                     System.out.println("Login successful!");
+                    LoggedUser.saveUserData(entry.getString("name"),entry.getString("login"),entry.getObjectId("_id"));
                     linkToDashboard();
                 }
             }
 
+        } catch (Exception e) {
+            System.out.println("DB error" + e);
         }
 
     }

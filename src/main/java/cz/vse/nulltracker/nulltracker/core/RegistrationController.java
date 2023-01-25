@@ -1,10 +1,6 @@
 package cz.vse.nulltracker.nulltracker.core;
 
-import com.mongodb.ConnectionString;
-import com.mongodb.client.MongoClient;
-import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -17,6 +13,17 @@ import org.bson.types.ObjectId;
 
 import java.util.Objects;
 
+import static cz.vse.nulltracker.nulltracker.database.DatabaseHandler.database;
+
+/**
+ * @author Martin Kadlec, Michal Průcha
+ * @version Last refactor on 25.1
+ *
+ * <p>Controller for the registration_view FXML file.
+ * Handles user creation in tandem with the DB.
+ * Take note that all data calls are made against the
+ * MongoDB remote system.</p>
+ */
 public class RegistrationController {
     public Button submitButton;
     public TextField nameInput;
@@ -30,6 +37,15 @@ public class RegistrationController {
         main.navigateTo("login");
     }
 
+    /**
+     * <p>Accepts string values from the given FE fields
+     * Accepts the login and validates against the existing DB entries
+     * for duplicities. Then, checks that the email given conforms to the basic norms using regex
+     * and that the password given is usable and of at least some use.</p>
+     *
+     * @see cz.vse.nulltracker.nulltracker.database.DatabaseHandler
+     * @see #isPassSafe(String)
+     */
     public void attemptRegistration() {
 
         String name = nameInput.getText();
@@ -37,11 +53,8 @@ public class RegistrationController {
         String pass = passwordFirstInput.getText();
         String secondPass = passwordSecondInput.getText();
 
-        ConnectionString connectionString = new ConnectionString("mongodb+srv://martin_dev:wahB7g4jjP2CCJ7@nulltrackerdev.nxwgnwc.mongodb.net/?retryWrites=true&w=majority");
-        MongoDatabase database;
 
-        try (MongoClient mongoClient = MongoClients.create(connectionString)) {
-            database = mongoClient.getDatabase("NullTracerkerDevDB");
+        try {
             MongoCollection<Document> collection = database.getCollection("users");
 
             Bson filter = Filters.regex("login", login);
@@ -78,10 +91,22 @@ public class RegistrationController {
 
             System.out.println("Created user:" + objectId);
 
+        } catch (Exception e) {
+            System.out.println("DB error" + e);
         }
     }
 
 
+    /**
+     * @see #attemptRegistration()
+     *
+     * Auxiliary method for the attemptRegistration.
+     * Before allowing creation, password is checked for at least basic safety
+     * measures
+     *
+     * @param passToCheck String with the password to be validated
+     * @return Boolean representation of the password evaluation, false if criteria is not met, true if password is usable
+     */
     private boolean isPassSafe (String passToCheck) {
 
         boolean hasDigit = false;
