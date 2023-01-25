@@ -2,6 +2,7 @@ package cz.vse.nulltracker.nulltracker.core;
 
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;
+import cz.vse.nulltracker.nulltracker.database.LoggedUser;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
@@ -67,6 +68,7 @@ public class LoginController {
                     System.out.println("Incorrect password");
                 } else {
                     System.out.println("Login successful!");
+                    LoggedUser.saveUserData(entry.getString("name"),entry.getString("login"),entry.getObjectId("_id"));
                     linkToDashboard();
                 }
             }
