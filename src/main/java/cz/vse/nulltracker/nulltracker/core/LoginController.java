@@ -4,6 +4,8 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;
 import cz.vse.nulltracker.nulltracker.database.LoggedUser;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -53,6 +55,13 @@ public class LoginController {
         String login = emailInput.getText();
         String pass = passwordInput.getText();
 
+        if (login.isEmpty() || pass.isEmpty()) {
+            showErrorMessage("Vyplňte všechna požadovaná pole.");
+            return;
+        }
+
+        ConnectionString connectionString = new ConnectionString("mongodb+srv://martin_dev:wahB7g4jjP2CCJ7@nulltrackerdev.nxwgnwc.mongodb.net/?retryWrites=true&w=majority");
+        MongoDatabase database;
 
         try  {
             MongoCollection<Document> collection = database.getCollection("users");
@@ -62,10 +71,12 @@ public class LoginController {
             Document entry = collection.find(filter).first();
 
             if (entry == null) {
-                System.out.println("Incorrect login");
+                passwordInput.clear();
+                showErrorMessage("Zadejte prosím správné přihlašovací údaje.");
             } else {
                 if(!Objects.equals(entry.getString("password"), pass)) {
-                    System.out.println("Incorrect password");
+                    passwordInput.clear();
+                    showErrorMessage("Zadejte prosím správné přihlašovací údaje.");
                 } else {
                     System.out.println("Login successful!");
                     LoggedUser.saveUserData(entry.getString("name"),entry.getString("login"),entry.getObjectId("_id"));
@@ -77,6 +88,14 @@ public class LoginController {
             System.out.println("DB error" + e);
         }
 
+    }
+
+    private void showErrorMessage(String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Chyba při přihlášení");
+        alert.setHeaderText("Chyba při přihlášení");
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 
 
