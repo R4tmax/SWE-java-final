@@ -25,12 +25,14 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         stage = primaryStage;
 
-        login_scene = new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("login_view.fxml"))), 1200, 800);
+        login_scene = new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("login_view.fxml"))));
         registration_scene = new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("registration_view.fxml"))));
         dashboard_scene = new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("dashboard_view.fxml"))));
         allExercises_scene = new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("allExercises_view.fxml"))));
 
         stage.setUserData(this);
+        stage.setWidth(1200);
+        stage.setHeight(800);
         stage.setScene(login_scene);
         stage.setTitle("Null Tracker");
         stage.show();
@@ -41,6 +43,8 @@ public class Main extends Application {
     }
 
     public void navigateTo(String desiredLocation) {
+        double prevWidth = stage.getWidth();
+        double prevHeight = stage.getHeight();
         switch (desiredLocation) {
             case "allExercises" -> stage.setScene(allExercises_scene);
             case "dashboard" -> stage.setScene(dashboard_scene);
