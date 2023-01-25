@@ -7,6 +7,9 @@ import org.bson.Document;
 import org.bson.types.ObjectId;
 
 public class DatabaseHandler {
+    public static final ConnectionString connectionString = new ConnectionString("mongodb+srv://martin_dev:wahB7g4jjP2CCJ7@nulltrackerdev.nxwgnwc.mongodb.net/?retryWrites=true&w=majority");
+    public static final MongoClient mongoClient = MongoClients.create(connectionString);
+    public static final MongoDatabase database = mongoClient.getDatabase("NullTracerkerDevDB");
 
     public static void DBtestInit () {
 
