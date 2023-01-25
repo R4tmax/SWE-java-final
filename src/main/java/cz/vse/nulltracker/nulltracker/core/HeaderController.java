@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Hyperlink;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 public class HeaderController {
@@ -18,7 +19,11 @@ public class HeaderController {
         Node node = (Node) actionEvent.getSource() ;
         String data = (String) node.getUserData();
         Main main = (Main) stage.getUserData();
-        System.out.println(data);
         main.navigateTo(data);
+    }
+
+    public void linkToHome(MouseEvent mouseEvent) {
+        Main main = (Main) stage.getUserData();
+        main.navigateTo("dashboard");
     }
 }

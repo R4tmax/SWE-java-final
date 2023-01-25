@@ -2,6 +2,7 @@ package cz.vse.nulltracker.nulltracker.core;
 
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
@@ -126,6 +127,5 @@ public class RegistrationController {
 
         return hasLetter;
     }
-
 
 }

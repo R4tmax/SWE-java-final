@@ -9,32 +9,62 @@
 }
 
 .h1 {
-    -fx-font-size: 50px;
+    -fx-font-size: 40px;
     -fx-font-weight: 700;
 }
 
 .h2 {
-    -fx-font-size: 45px;
+    -fx-font-size: 30px;
     -fx-font-weight: 700;
 }
 
 .h3 {
-    -fx-font-size: 35px;
+    -fx-font-size: 25px;
     -fx-font-weight: 700;
 }
 
 .h4 {
-    -fx-font-size: 25px;
+    -fx-font-size: 20px;
+    -fx-font-weight: 700;
+}
+
+.p {
+    -fx-font-size: 14px;
+}
+
+.opacity-80 {
+    -fx-opacity: 0.8;
+}
+
+.opacity-50 {
+    -fx-opacity: 0.5;
+}
+
+.bold {
     -fx-font-weight: 700;
 }
 
 .text-field {
     -fx-background-color: #ffffff;
     -fx-border-color: #000000;
-    -fx-border-width: 1px;
+    -fx-border-width: 0 0 1px 0;
     -fx-pref-width: 340px;
-    -fx-padding: 10px 17px;
-    -fx-border-radius: 7px;
+    -fx-padding: 5px 16px;
+    /*-fx-border-radius: 7px;*/
+    -fx-border-style: none hidden solid none;
+}
+
+.date-picker {
+    -fx-background-color: #ffffff;
+    -fx-border-width: 0 ;
+    -fx-border-style: none ;
+}
+
+.combo-box {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #000000;
+    -fx-border-width: 0 0 1px 0;
+    -fx-padding: 5px 16px;
 }
 
 .button {
