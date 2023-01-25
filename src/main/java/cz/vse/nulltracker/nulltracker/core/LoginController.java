@@ -14,6 +14,15 @@ import java.util.Objects;
 
 import static cz.vse.nulltracker.nulltracker.database.DatabaseHandler.database;
 
+/**
+ * @author Martin Kadlec, Michal Průcha
+ * @version Last refactor 25.1
+ * <p>
+ * Controller for the login_view FXML file.
+ * It is the first screen opened upon program launch.</p>
+ *
+ * @see cz.vse.nulltracker.nulltracker.database.DatabaseHandler
+ */
 public class LoginController {
     public Button submitButton;
     public TextField emailInput;
@@ -31,6 +40,13 @@ public class LoginController {
         main.navigateTo("dashboard");
     }
 
+    /**
+     * Accepts text values from the related fields
+     * and interprets them against the contents of the "users"
+     * collection. Call to the DB is made via DatabaseHandler client
+     *
+     * @see cz.vse.nulltracker.nulltracker.database.DatabaseHandler
+     */
     public void attemptLogin() {
 
         String login = emailInput.getText();

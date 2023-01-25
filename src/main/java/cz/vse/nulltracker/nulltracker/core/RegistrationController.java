@@ -15,6 +15,15 @@ import java.util.Objects;
 
 import static cz.vse.nulltracker.nulltracker.database.DatabaseHandler.database;
 
+/**
+ * @author Martin Kadlec, Michal Průcha
+ * @version Last refactor on 25.1
+ *
+ * <p>Controller for the registration_view FXML file.
+ * Handles user creation in tandem with the DB.
+ * Take note that all data calls are made against the
+ * MongoDB remote system.</p>
+ */
 public class RegistrationController {
     public Button submitButton;
     public TextField nameInput;
@@ -28,6 +37,15 @@ public class RegistrationController {
         main.navigateTo("login");
     }
 
+    /**
+     * <p>Accepts string values from the given FE fields
+     * Accepts the login and validates against the existing DB entries
+     * for duplicities. Then, checks that the email given conforms to the basic norms using regex
+     * and that the password given is usable and of at least some use.</p>
+     *
+     * @see cz.vse.nulltracker.nulltracker.database.DatabaseHandler
+     * @see #isPassSafe(String)
+     */
     public void attemptRegistration() {
 
         String name = nameInput.getText();
@@ -79,6 +97,16 @@ public class RegistrationController {
     }
 
 
+    /**
+     * @see #attemptRegistration()
+     *
+     * Auxiliary method for the attemptRegistration.
+     * Before allowing creation, password is checked for at least basic safety
+     * measures
+     *
+     * @param passToCheck String with the password to be validated
+     * @return Boolean representation of the password evaluation, false if criteria is not met, true if password is usable
+     */
     private boolean isPassSafe (String passToCheck) {
 
         boolean hasDigit = false;

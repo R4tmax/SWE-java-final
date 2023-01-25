@@ -1,64 +1,34 @@
 package cz.vse.nulltracker.nulltracker.database;
 
 import com.mongodb.ConnectionString;
-import com.mongodb.MongoClientSettings;
-import com.mongodb.client.*;
-import org.bson.Document;
-import org.bson.types.ObjectId;
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
+import com.mongodb.client.MongoDatabase;
 
+/**
+ * @author Martin Kadlec
+ * @version Last refactor on 25.1
+ *
+ * <p>Facilitator of the MongoDB communication.
+ * Predefines and declares DB connection variables as static field acessible from anywhere in the code.
+ * The structure is:
+ * ConenctionString - holds the URI of the underlying DB, it holds params with name of the connection and necessary password
+ * and as such basically functions as a API key
+ * MongoClient - opens the communication tunnel between the app and the DB
+ * MongoDatabse - configures the connection to only interact with the required tablespace
+ * <p>
+ * Take note that while the connection is universal the targeted collection might not be.
+ * Be sure to specify required collection prior to preforming CRUD operations.
+ * <p>
+ * Further references are on the project wiki.
+ * </p>
+ *
+ */
 public class DatabaseHandler {
     public static final ConnectionString connectionString = new ConnectionString("mongodb+srv://martin_dev:wahB7g4jjP2CCJ7@nulltrackerdev.nxwgnwc.mongodb.net/?retryWrites=true&w=majority");
     public static final MongoClient mongoClient = MongoClients.create(connectionString);
     public static final MongoDatabase database = mongoClient.getDatabase("NullTracerkerDevDB");
 
-    public static void DBtestInit () {
 
-        ConnectionString connectionString = new ConnectionString("mongodb+srv://martin_dev:wahB7g4jjP2CCJ7@nulltrackerdev.nxwgnwc.mongodb.net/?retryWrites=true&w=majority");
-        try (MongoClient mongoClient = MongoClients.create(connectionString)) {
-            MongoIterable<String> dbs = mongoClient.listDatabaseNames();
-            try (MongoCursor<String> cursor = dbs.cursor()) {
-                while (cursor.hasNext()) {
-                    System.out.println(cursor.next());
-                }
-            }
-        }
-    }
-
-    public static void DBinsertionTest () {
-        ConnectionString connectionString = new ConnectionString("mongodb+srv://martin_dev:wahB7g4jjP2CCJ7@nulltrackerdev.nxwgnwc.mongodb.net/?retryWrites=true&w=majority");
-        MongoClientSettings settings = MongoClientSettings.builder()
-                .applyConnectionString(connectionString)
-                .build();
-        MongoDatabase database;
-        try (MongoClient mongoClient = MongoClients.create(settings)) {
-            database = mongoClient.getDatabase("NullTracerkerDevDB");
-            MongoCollection<Document> collection = database.getCollection("users");
-
-            Document document = new Document("login", "dbtesting2")
-                    .append("password", "A11115");
-
-            collection.insertOne(document);
-            ObjectId objectId = document.getObjectId("_id");
-
-
-            System.out.println("Created user:" + objectId);
-        }
-    }
-
-    public static void DBdocumentReadTest () {
-            ConnectionString connectionString = new ConnectionString("mongodb+srv://martin_dev:wahB7g4jjP2CCJ7@nulltrackerdev.nxwgnwc.mongodb.net/?retryWrites=true&w=majority");
-            MongoDatabase database;
-
-             try (MongoClient mongoClient = MongoClients.create(connectionString)) {
-                 database = mongoClient.getDatabase("NullTracerkerDevDB");
-                 MongoCollection<Document> collection = database.getCollection("users");
-                 FindIterable<Document> findIterable = collection.find(new Document());
-                 try (MongoCursor<Document> cursor = findIterable.cursor()) {
-                     while (cursor.hasNext()) {
-                         System.out.println(cursor.next());
-                     }
-                }
-            }
-    }
 
 }
