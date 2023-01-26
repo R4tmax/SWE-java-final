@@ -72,6 +72,7 @@
     -fx-background-radius: 7px;
     -fx-text-fill: #ffffff;
     -fx-padding: 10px 17px;
+    -fx-graphic-text-gap: 10px;
 }
 
 .list-view {
