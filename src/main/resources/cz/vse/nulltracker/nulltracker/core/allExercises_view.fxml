@@ -20,33 +20,33 @@
       </HBox>
       <HBox maxWidth="1060.0" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
          <children>
-            <VBox prefHeight="200.0" prefWidth="100.0" spacing="34.0" HBox.hgrow="ALWAYS">
+            <VBox prefHeight="200.0" prefWidth="100.0" spacing="34.0" HBox.hgrow="ALWAYS" fx:id="mainListOfExercises">
                <children>
-                  <HBox layoutX="10.0" layoutY="10.0" prefHeight="100.0" prefWidth="200.0">
+                  <HBox layoutX="10.0" layoutY="10.0" prefHeight="100.0" prefWidth="200.0" fx:id="category">
                      <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="h4" text="Silová" wrappingWidth="120.0" />
-                        <ListView prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="h4" text="Strength" wrappingWidth="120.0" fx:id="categoryName" />
+                        <ListView prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" fx:id="exercisesOfCategory" />
                      </children>
                   </HBox>
                   <HBox layoutX="10.0" layoutY="10.0" prefHeight="100.0" prefWidth="200.0">
                      <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="h4" text="Kardio" wrappingWidth="120.0" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="h4" text="Cardio" wrappingWidth="120.0" />
                         <ListView prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
                      </children>
                   </HBox>
                </children>
             </VBox>
-            <VBox minHeight="404.0" prefWidth="578.0" style="-fx-background-color: black; -fx-background-radius: 20;">
+            <VBox minHeight="404.0" prefWidth="578.0" style="-fx-background-color: black; -fx-background-radius: 20;" fx:id="descriptionRegion">
                <padding>
                   <Insets bottom="50.0" left="50.0" right="50.0" top="50.0" />
                </padding>
                <children>
-                  <Text fill="WHITE" lineSpacing="20.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="h3" text="Bench Press">
+                  <Text fill="WHITE" lineSpacing="20.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="h3" text="Bench Press" fx:id="descriptionTitle">
                      <VBox.margin>
                         <Insets bottom="25.0" />
                      </VBox.margin>
                   </Text>
-                  <Text fill="WHITE" lineSpacing="10.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Quisque porta. Aenean fermentum risus id tortor. Praesent dapibus. Etiam egestas wisi a erat. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aenean fermentum risus id tortor. Fusce dui leo, imperdiet in, aliquam sit amet, feugiat eu, orci. Maecenas lorem. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat." wrappingWidth="450.0">
+                  <Text fill="WHITE" lineSpacing="10.0" strokeType="OUTSIDE" strokeWidth="0.0" fx:id="descriptionText" text="Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Quisque porta. Aenean fermentum risus id tortor. Praesent dapibus. Etiam egestas wisi a erat. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aenean fermentum risus id tortor. Fusce dui leo, imperdiet in, aliquam sit amet, feugiat eu, orci. Maecenas lorem. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat." wrappingWidth="450.0">
                      <styleClass>
                         <String fx:value="p" />
                         <String fx:value="opacity-80" />
