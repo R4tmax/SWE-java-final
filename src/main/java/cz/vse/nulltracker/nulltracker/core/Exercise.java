@@ -39,4 +39,9 @@ public class Exercise {
         this.description = description;
         this.parameters = parameters;
     }
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }
