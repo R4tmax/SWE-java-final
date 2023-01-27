@@ -3,18 +3,40 @@ package cz.vse.nulltracker.nulltracker.core;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Map;
+
 public class Exercise {
+    private String name;
+    private String description;
+    private Map parameters;
 
-    @SerializedName("type")
-    @Expose
-    private Object type;
-
-    public Object getType() {
-        return type;
+    public String getName() {
+        return name;
     }
 
-    public void setType(Object type) {
-        this.type = type;
+    public void setName(String name) {
+        this.name = name;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Map getParameters() {
+        return parameters;
+    }
+
+    public void setParameters(Map parameters) {
+        this.parameters = parameters;
+    }
+
+    public Exercise(String name, String description, Map parameters) {
+        this.name = name;
+        this.description = description;
+        this.parameters = parameters;
+    }
 }
