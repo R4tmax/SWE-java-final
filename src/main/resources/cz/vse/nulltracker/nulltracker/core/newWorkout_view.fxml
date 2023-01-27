@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<VBox alignment="TOP_CENTER" stylesheets="@style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cz.vse.nulltracker.nulltracker.core.AllExercisesController">
+<VBox alignment="TOP_CENTER" stylesheets="@style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cz.vse.nulltracker.nulltracker.core.NewWorkoutController">
    <children>
       <fx:include source="header_view.fxml" />
       <HBox alignment="CENTER_LEFT" fillHeight="false" maxWidth="1060.0">
