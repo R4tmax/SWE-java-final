@@ -33,12 +33,7 @@ public class HeaderController {
 
 
     public void initialize() {
-        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(5), new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                updateName();
-            }
-        }));
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(3), event -> updateName()));
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
     }
