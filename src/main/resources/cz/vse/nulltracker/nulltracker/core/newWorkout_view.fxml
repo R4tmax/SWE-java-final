@@ -31,7 +31,7 @@
             <VBox maxWidth="350.0" prefHeight="404.0" spacing="15.0" HBox.hgrow="SOMETIMES">
                <children>
                   <DatePicker prefHeight="38.0" prefWidth="278.0" fx:id="timestampCalendar"/>
-                  <ComboBox prefHeight="24.0" prefWidth="278.0" fx:id="activitiySelector">
+                  <ComboBox prefHeight="24.0" prefWidth="278.0" fx:id="activitySelector">
                      <VBox.margin>
                         <Insets bottom="25.0" />
                      </VBox.margin></ComboBox>
