@@ -27,17 +27,6 @@ public class LoggedUser {
         LUname = name;
         LUemail = mail;
         LUID = userId;
-        insertionLogger();
-    }
-
-
-    /**
-     * Control print.
-     */
-    public static void insertionLogger () {
-        System.out.println(LUname);
-        System.out.println(LUemail);
-        System.out.println(LUID);
     }
 
 }
