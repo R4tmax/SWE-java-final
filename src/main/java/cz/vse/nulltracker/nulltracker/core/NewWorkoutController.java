@@ -14,6 +14,11 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
 
+//TODO:DOCS
+//TODO:remap the JSON
+//TODO:Handle the Labels
+//TODO:Save the activity
+
 public class NewWorkoutController {
     public ComboBox<Exercise> activitySelector;
     public DatePicker timestampCalendar;
@@ -53,6 +58,19 @@ public class NewWorkoutController {
             }
         });
 
+        activitySelector.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                // update the labels with the information from the selected exercise
+                attribute1.setText(newValue.getName());
+                attribute2.setText("Description: " + newValue.getDescription());
+                //attribute3.setText("Parameters: " + newValue.getParameters());
+                //attribute4.setText("Other information: " + newValue.getOtherInformation());
+            }
+        });
+
     }
+
+
+
 
 }
