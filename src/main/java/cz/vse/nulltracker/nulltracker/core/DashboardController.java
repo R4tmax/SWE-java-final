@@ -1,20 +1,7 @@
 package cz.vse.nulltracker.nulltracker.core;
 
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.model.Filters;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import org.bson.Document;
-import org.bson.conversions.Bson;
-import org.bson.types.ObjectId;
-
-import java.util.Objects;
-
-import static cz.vse.nulltracker.nulltracker.database.DatabaseHandler.database;
 
 /**
  * @author Martin Kadlec, Michal Průcha

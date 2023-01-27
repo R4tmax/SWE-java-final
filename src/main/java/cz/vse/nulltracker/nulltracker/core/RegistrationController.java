@@ -32,7 +32,7 @@ public class RegistrationController {
     public PasswordField passwordFirstInput;
     public PasswordField passwordSecondInput;
     private final Stage stage = Main.getStage();
-    public Label infomessage;
+    public Label infoMessage;
 
     @FXML
     private void linkToLogin() {
@@ -56,8 +56,8 @@ public class RegistrationController {
         String pass = passwordFirstInput.getText();
         String secondPass = passwordSecondInput.getText();
 
-        infomessage.setStyle("-fx-text-fill: red");
-        infomessage.setVisible(true);
+        infoMessage.setStyle("-fx-text-fill: red");
+        infoMessage.setVisible(true);
 
         try {
             MongoCollection<Document> collection = database.getCollection("users");
@@ -69,26 +69,26 @@ public class RegistrationController {
 
             if (entry != null) {
                 System.out.println("User already exists");
-                infomessage.setText("Uživatel již existuje");
+                infoMessage.setText("Uživatel již existuje");
                 return;
             }
 
             if (!login.matches("^(([^<>()\\[\\]\\\\.,;:\\s@\"]+(\\.[^<>()\\[\\]\\\\.,;:\\s@\"]+)*)|(\".+\"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$")) {
                 System.out.println("Incorrect email format!");
-                infomessage.setText("nesprávný formát emailu");
+                infoMessage.setText("nesprávný formát emailu");
                 return;
             }
 
             if (!Objects.equals(pass, secondPass)) {
                 System.out.println("Passwords do not match");
-                infomessage.setText("Hesla se neshodují");
+                infoMessage.setText("Hesla se neshodují");
                 return;
             }
 
             if (!isPassSafe(pass)) {
                 System.out.println("Password is not safe enough");
                 System.out.println("Password should contain at least 4 characters, one number and one letter");
-                infomessage.setText("Heslo musí obsahovat minimálně" + "\n" +"4 znaky a obsahovat číslo");
+                infoMessage.setText("Heslo musí obsahovat minimálně" + "\n" +"4 znaky a obsahovat číslo");
                 return;
             }
 
@@ -101,8 +101,8 @@ public class RegistrationController {
 
             System.out.println("Created user:" + objectId);
 
-            infomessage.setStyle("-fx-text-fill: green");
-            infomessage.setText("Uživatel vytvořen");
+            infoMessage.setStyle("-fx-text-fill: green");
+            infoMessage.setText("Uživatel vytvořen");
 
         } catch (Exception e) {
             System.out.println("DB error" + e);

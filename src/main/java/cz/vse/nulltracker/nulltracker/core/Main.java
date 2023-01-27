@@ -15,9 +15,6 @@ public class Main extends Application {
     private Scene allExercises_scene;
     private Scene newWorkout_scene;
     public static void main(String[] args) {
-        //DatabaseHandler.DBtestInit();
-        //DatabaseHandler.DBinsertionTest();
-        //DatabaseHandler.DBdocumentReadTest();
         launch();
     }
 
@@ -44,8 +41,7 @@ public class Main extends Application {
     }
 
     public void navigateTo(String desiredLocation) {
-        double prevWidth = stage.getWidth();
-        double prevHeight = stage.getHeight();
+
         switch (desiredLocation) {
             case "allExercises" -> stage.setScene(allExercises_scene);
             case "dashboard" -> stage.setScene(dashboard_scene);
