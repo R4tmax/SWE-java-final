@@ -30,14 +30,14 @@
          <children>
             <VBox maxWidth="350.0" prefHeight="404.0" spacing="15.0" HBox.hgrow="SOMETIMES">
                <children>
-                  <DatePicker prefHeight="38.0" prefWidth="278.0" />
-                  <ComboBox prefHeight="24.0" prefWidth="278.0">
+                  <DatePicker prefHeight="38.0" prefWidth="278.0" fx:id="timestampCalendar"/>
+                  <ComboBox prefHeight="24.0" prefWidth="278.0" fx:id="activitiySelector">
                      <VBox.margin>
                         <Insets bottom="25.0" />
                      </VBox.margin></ComboBox>
                   <HBox alignment="CENTER_LEFT" VBox.vgrow="NEVER">
                      <children>
-                        <Label prefHeight="16.0" prefWidth="211.0" text="Počet sérií" HBox.hgrow="ALWAYS">
+                        <Label prefHeight="16.0" prefWidth="211.0" text="Počet sérií" HBox.hgrow="ALWAYS" fx:id="attribute1">
                            <HBox.margin>
                               <Insets right="10.0" />
                            </HBox.margin>
@@ -47,7 +47,7 @@
                   </HBox>
                   <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="127.0">
                      <children>
-                        <Label prefHeight="16.0" prefWidth="211.0" text="Počet opakování" HBox.hgrow="ALWAYS">
+                        <Label prefHeight="16.0" prefWidth="211.0" text="Počet opakování" HBox.hgrow="ALWAYS" fx:id="attribute2">
                            <HBox.margin>
                               <Insets right="10.0" />
                            </HBox.margin>
@@ -57,7 +57,7 @@
                   </HBox>
                   <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="180.0">
                      <children>
-                        <Label prefHeight="16.0" prefWidth="211.0" text="Spálené kalorie" HBox.hgrow="ALWAYS">
+                        <Label prefHeight="16.0" prefWidth="211.0" text="Spálené kalorie" HBox.hgrow="ALWAYS" fx:id="attribute3">
                            <HBox.margin>
                               <Insets right="10.0" />
                            </HBox.margin>
@@ -67,7 +67,7 @@
                   </HBox>
                   <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="309.0">
                      <children>
-                        <Label prefHeight="16.0" prefWidth="211.0" text="Doba v minutách" HBox.hgrow="ALWAYS">
+                        <Label prefHeight="16.0" prefWidth="211.0" text="Doba v minutách" HBox.hgrow="ALWAYS" fx:id="attribute4">
                            <HBox.margin>
                               <Insets right="10.0" />
                            </HBox.margin>
