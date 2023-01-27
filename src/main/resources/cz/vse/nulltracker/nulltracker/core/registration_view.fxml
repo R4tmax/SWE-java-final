@@ -54,10 +54,10 @@
                         <Font name="Inter Extra Bold" size="40.0" />
                      </font>
                   </Text>
-                  <TextField fx:id="nameInput" promptText="Jméno" />
-                  <TextField fx:id="emailInput" promptText="Email" />
-                  <PasswordField fx:id="passwordFirstInput" promptText="Heslo" />
-                  <PasswordField fx:id="passwordSecondInput" promptText="Heslo znovu" />
+                  <TextField fx:id="nameInput" promptText="Jméno" onAction="#attemptRegistration" />
+                  <TextField fx:id="emailInput" promptText="Email" onAction="#attemptRegistration" />
+                  <PasswordField fx:id="passwordFirstInput" promptText="Heslo" onAction="#attemptRegistration" />
+                  <PasswordField fx:id="passwordSecondInput" promptText="Heslo znovu" onAction="#attemptRegistration" />
                   <Button fx:id="submitButton" mnemonicParsing="false" onMouseClicked="#attemptRegistration" text="Potvrdit">
                      <cursor>
                         <Cursor fx:constant="HAND" />
