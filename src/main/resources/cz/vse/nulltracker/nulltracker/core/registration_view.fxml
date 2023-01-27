@@ -62,7 +62,7 @@
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor></Button>
-                  <Label fx:id="infomessage" text="Here is text" textFill="RED" visible="false">
+                  <Label fx:id="infoMessage" text="Here is text" textFill="RED" visible="false">
                      <font>
                         <Font size="18.0" />
                      </font>

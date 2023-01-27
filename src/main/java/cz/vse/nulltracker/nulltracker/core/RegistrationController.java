@@ -2,11 +2,9 @@ package cz.vse.nulltracker.nulltracker.core;
 
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;
+import cz.vse.nulltracker.nulltracker.database.LoggedUser;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import org.bson.Document;
 import org.bson.conversions.Bson;
@@ -32,12 +30,18 @@ public class RegistrationController {
     public PasswordField passwordFirstInput;
     public PasswordField passwordSecondInput;
     private final Stage stage = Main.getStage();
-    public Label infomessage;
+    public Label infoMessage;
 
     @FXML
     private void linkToLogin() {
         Main main = (Main) stage.getUserData();
         main.navigateTo("login");
+    }
+
+    @FXML
+    private void linkToDashboard() {
+        Main main = (Main) stage.getUserData();
+        main.navigateTo("dashboard");
     }
 
     /**
@@ -56,8 +60,8 @@ public class RegistrationController {
         String pass = passwordFirstInput.getText();
         String secondPass = passwordSecondInput.getText();
 
-        infomessage.setStyle("-fx-text-fill: red");
-        infomessage.setVisible(true);
+        infoMessage.setStyle("-fx-text-fill: red");
+        infoMessage.setVisible(true);
 
         try {
             MongoCollection<Document> collection = database.getCollection("users");
@@ -68,27 +72,22 @@ public class RegistrationController {
 
 
             if (entry != null) {
-                System.out.println("User already exists");
-                infomessage.setText("Uživatel již existuje");
+                infoMessage.setText("Uživatel již existuje.");
                 return;
             }
 
             if (!login.matches("^(([^<>()\\[\\]\\\\.,;:\\s@\"]+(\\.[^<>()\\[\\]\\\\.,;:\\s@\"]+)*)|(\".+\"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$")) {
-                System.out.println("Incorrect email format!");
-                infomessage.setText("nesprávný formát emailu");
+                infoMessage.setText("Nesprávný formát emailu.");
                 return;
             }
 
             if (!Objects.equals(pass, secondPass)) {
-                System.out.println("Passwords do not match");
-                infomessage.setText("Hesla se neshodují");
+                infoMessage.setText("Hesla se neshodují.");
                 return;
             }
 
             if (!isPassSafe(pass)) {
-                System.out.println("Password is not safe enough");
-                System.out.println("Password should contain at least 4 characters, one number and one letter");
-                infomessage.setText("Heslo musí obsahovat minimálně" + "\n" +"4 znaky a obsahovat číslo");
+                infoMessage.setText("Heslo by mělo obsahovat alespoň" + "\n" +"4 znaky, jedno písmeno a jednu číslici.");
                 return;
             }
 
@@ -97,15 +96,16 @@ public class RegistrationController {
                     .append("password", pass).append("name", name);
 
             collection.insertOne(document);
-            ObjectId objectId = document.getObjectId("_id");
+            ObjectId documentId = document.getObjectId("_id");
 
-            System.out.println("Created user:" + objectId);
-
-            infomessage.setStyle("-fx-text-fill: green");
-            infomessage.setText("Uživatel vytvořen");
+            infoMessage.setStyle("-fx-text-fill: green");
+            infoMessage.setText("Uživatel vytvořen!");
+            LoggedUser.saveUserData(document.getString("name"),document.getString("login"),documentId);
+            linkToDashboard();
 
         } catch (Exception e) {
             System.out.println("DB error" + e);
+            showDBErrorMessage();
         }
     }
 
@@ -138,6 +138,20 @@ public class RegistrationController {
         }
 
         return hasLetter;
+    }
+
+
+    /**
+     * Creates a modal window warning user of an error.
+     * In case of registration, it is only called to notify the user of
+     * unexpected DB error.
+     */
+    private void showDBErrorMessage() {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Chyba při přihlášení");
+        alert.setHeaderText("Chyba při přihlášení");
+        alert.setContentText("Chyba při komunikaci s databází!");
+        alert.showAndWait();
     }
 
 }
