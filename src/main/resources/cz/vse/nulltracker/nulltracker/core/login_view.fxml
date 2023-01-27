@@ -50,8 +50,8 @@
                      </VBox.margin>
 
                   </Text>
-                  <TextField fx:id="emailInput" promptText="Email" />
-                  <PasswordField fx:id="passwordInput" promptText="Heslo" />
+                  <TextField fx:id="emailInput" onAction="#attemptLogin" promptText="Email" />
+                  <PasswordField fx:id="passwordInput" promptText="Heslo" onAction="#attemptLogin" />
                   <Button fx:id="submitButton" mnemonicParsing="false" onMouseClicked="#attemptLogin" text="Potvrdit">
                      <cursor>
                         <Cursor fx:constant="HAND" />
