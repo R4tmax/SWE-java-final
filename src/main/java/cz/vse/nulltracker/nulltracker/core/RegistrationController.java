@@ -2,9 +2,9 @@ package cz.vse.nulltracker.nulltracker.core;
 
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -32,6 +32,8 @@ public class RegistrationController {
     public PasswordField passwordFirstInput;
     public PasswordField passwordSecondInput;
     private final Stage stage = Main.getStage();
+    public Label infomessage;
+
     @FXML
     private void linkToLogin() {
         Main main = (Main) stage.getUserData();
@@ -54,6 +56,8 @@ public class RegistrationController {
         String pass = passwordFirstInput.getText();
         String secondPass = passwordSecondInput.getText();
 
+        infomessage.setStyle("-fx-text-fill: red");
+        infomessage.setVisible(true);
 
         try {
             MongoCollection<Document> collection = database.getCollection("users");
@@ -62,24 +66,29 @@ public class RegistrationController {
 
             Document entry = collection.find(filter).first();
 
+
             if (entry != null) {
                 System.out.println("User already exists");
+                infomessage.setText("Uživatel již existuje");
                 return;
             }
 
             if (!login.matches("^(([^<>()\\[\\]\\\\.,;:\\s@\"]+(\\.[^<>()\\[\\]\\\\.,;:\\s@\"]+)*)|(\".+\"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$")) {
                 System.out.println("Incorrect email format!");
+                infomessage.setText("nesprávný formát emailu");
                 return;
             }
 
             if (!Objects.equals(pass, secondPass)) {
                 System.out.println("Passwords do not match");
+                infomessage.setText("Hesla se neshodují");
                 return;
             }
 
             if (!isPassSafe(pass)) {
                 System.out.println("Password is not safe enough");
                 System.out.println("Password should contain at least 4 characters, one number and one letter");
+                infomessage.setText("Heslo musí obsahovat minimálně" + "\n" +"4 znaky a obsahovat číslo");
                 return;
             }
 
@@ -91,6 +100,9 @@ public class RegistrationController {
             ObjectId objectId = document.getObjectId("_id");
 
             System.out.println("Created user:" + objectId);
+
+            infomessage.setStyle("-fx-text-fill: green");
+            infomessage.setText("Uživatel vytvořen");
 
         } catch (Exception e) {
             System.out.println("DB error" + e);
