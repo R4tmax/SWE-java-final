@@ -2,11 +2,13 @@
 
 <?import java.lang.String?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.ListView?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
+<?import javafx.scene.text.TextFlow?>
 
+<?import javafx.scene.control.ListView?>
 <VBox alignment="TOP_CENTER" stylesheets="@style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cz.vse.nulltracker.nulltracker.core.AllExercisesController">
    <children>
       <fx:include source="header_view.fxml" />
@@ -18,39 +20,32 @@
             <Insets bottom="30.0" top="60.0" />
          </VBox.margin>
       </HBox>
-      <HBox maxWidth="1060.0" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+      <HBox fillHeight="false" maxWidth="1060.0" prefWidth="1060.0" spacing="20.0" VBox.vgrow="ALWAYS">
          <children>
-            <VBox prefHeight="200.0" prefWidth="100.0" spacing="34.0" HBox.hgrow="ALWAYS" fx:id="mainListOfExercises">
-               <children>
-                  <HBox layoutX="10.0" layoutY="10.0" prefHeight="100.0" prefWidth="200.0" fx:id="category">
-                     <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="h4" text="Strength" wrappingWidth="120.0" fx:id="categoryName" />
-                        <ListView prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" fx:id="exercisesOfCategory" />
-                     </children>
-                  </HBox>
-                  <HBox layoutX="10.0" layoutY="10.0" prefHeight="100.0" prefWidth="200.0">
-                     <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="h4" text="Cardio" wrappingWidth="120.0" />
-                        <ListView prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
-                     </children>
-                  </HBox>
-               </children>
+            <VBox fx:id="mainListOfExercises" centerShape="false" fillWidth="false" spacing="34.0" HBox.hgrow="SOMETIMES">
             </VBox>
-            <VBox minHeight="404.0" prefWidth="578.0" style="-fx-background-color: black; -fx-background-radius: 20;" fx:id="descriptionRegion">
+            <VBox fx:id="descriptionRegion" maxWidth="578.0" style="-fx-background-color: black; -fx-background-radius: 20;" HBox.hgrow="SOMETIMES">
                <padding>
                   <Insets bottom="50.0" left="50.0" right="50.0" top="50.0" />
                </padding>
                <children>
-                  <Text fill="WHITE" lineSpacing="20.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="h3" text="Bench Press" fx:id="descriptionTitle">
+                  <Text fx:id="descriptionTitle" fill="WHITE" lineSpacing="20.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="h3" text="Deadlift">
                      <VBox.margin>
                         <Insets bottom="25.0" />
                      </VBox.margin>
                   </Text>
-                  <Text fill="WHITE" lineSpacing="10.0" strokeType="OUTSIDE" strokeWidth="0.0" fx:id="descriptionText" text="Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Quisque porta. Aenean fermentum risus id tortor. Praesent dapibus. Etiam egestas wisi a erat. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aenean fermentum risus id tortor. Fusce dui leo, imperdiet in, aliquam sit amet, feugiat eu, orci. Maecenas lorem. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat." wrappingWidth="450.0">
+                  <TextFlow lineSpacing="10.0" VBox.vgrow="ALWAYS">
+                     <cursor>
+                        <Cursor fx:constant="TEXT" />
+                     </cursor>
+                     <children>
+                        <Text fx:id="descriptionText" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Deadlifts are a compound exercise that works the legs, hips, and lower back. Stand with your feet hip-width apart, then bend your knees and lower your body to grip a barbell on the floor. Slowly stand up, keeping your back straight and the barbell close to your body." />
+                     </children>
                      <styleClass>
                         <String fx:value="p" />
                         <String fx:value="opacity-80" />
-                     </styleClass></Text>
+                     </styleClass>
+                  </TextFlow>
                </children>
             </VBox>
          </children>
