@@ -7,6 +7,6 @@ build:
     paths:
       - "target/*.zip"
   only:
-    - master
+    - main
     - test
     - tags
