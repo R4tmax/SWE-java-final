@@ -4,6 +4,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import cz.vse.nulltracker.nulltracker.database.LoggedActivity;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 
@@ -11,6 +12,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 //TODO:DOCS
@@ -37,12 +39,14 @@ public class NewWorkoutController {
     public Button buttonDropLog;
     public Button buttonAppendLong;
 
+    public ArrayList<LoggedActivity> activityLog = new ArrayList<>();
+
     public void initialize () throws FileNotFoundException {
 
         //initial UI clear (done in order to avoid FXML manipulation)
         cleanUpPrompts();
         cleanUpLabels();
-        disableInactiveFields(true);
+        disableInactiveFields();
 
         //read and parse the contents of the JSON
         ArrayList<Exercise> allExercises = new ArrayList<>();
@@ -85,7 +89,7 @@ public class NewWorkoutController {
                 int iterator = 0;
                 int control = newValue.getParameters().size();
                 cleanUpLabels();
-                disableInactiveFields(true);
+                disableInactiveFields();
 
                 if (iterator < control) {
                     attribute1.setText(newValue.getParameters() != null ? newValue.getParameters().get(0) : "");
@@ -114,11 +118,11 @@ public class NewWorkoutController {
         });
     }
 
-    private void disableInactiveFields(boolean b) {
-        attribute1Field.setDisable(b);
-        attribute2Field.setDisable(b);
-        attribute3Field.setDisable(b);
-        attribute4Field.setDisable(b);
+    private void disableInactiveFields() {
+        attribute1Field.setDisable(true);
+        attribute2Field.setDisable(true);
+        attribute3Field.setDisable(true);
+        attribute4Field.setDisable(true);
     }
 
     private void cleanUpPrompts() {
@@ -135,12 +139,33 @@ public class NewWorkoutController {
         attribute4.setText("");
     }
 
-    public void appendLog(MouseEvent mouseEvent) {
+
+    private void cleanUpFields() {
+        attribute1Field.clear();
+        attribute2Field.clear();
+        attribute3Field.clear();
+        attribute4Field.clear();
     }
 
-    public void dropLog(MouseEvent mouseEvent) {
+    public void appendLog() {
+        Map<String,String> placeholderMap = new HashMap<>();
+
+        if (!attribute1Field.isDisable()) placeholderMap.put(attribute1.getText(),attribute1Field.getText());
+        if (!attribute2Field.isDisable()) placeholderMap.put(attribute2.getText(),attribute2Field.getText());
+        if (!attribute3Field.isDisable()) placeholderMap.put(attribute3.getText(),attribute3Field.getText());
+        if (!attribute4Field.isDisable()) placeholderMap.put(attribute4.getText(),attribute4Field.getText());
+        activityLog.add(new LoggedActivity(activitySelector.getValue().getName(),placeholderMap));
     }
 
-    public void saveLog(MouseEvent mouseEvent) {
+    public void dropLog() {
+        activityLog.clear();
+        activitySelector.getSelectionModel().clearSelection();
+        disableInactiveFields();
+        cleanUpLabels();
+        cleanUpPrompts();
+        cleanUpFields();
+    }
+
+    public void saveLog() {
     }
 }
