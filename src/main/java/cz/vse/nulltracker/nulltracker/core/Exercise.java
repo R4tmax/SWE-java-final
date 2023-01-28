@@ -3,12 +3,13 @@ package cz.vse.nulltracker.nulltracker.core;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 public class Exercise {
     private String name;
     private String description;
-    private Map parameters;
+    private ArrayList<String> parameters;
 
     public String getName() {
         return name;
@@ -22,19 +23,12 @@ public class Exercise {
         return description;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
 
-    public Map getParameters() {
+    public ArrayList<String> getParameters() {
         return parameters;
     }
 
-    public void setParameters(Map parameters) {
-        this.parameters = parameters;
-    }
-
-    public Exercise(String name, String description, Map parameters) {
+    public Exercise(String name, String description, ArrayList<String> parameters) {
         this.name = name;
         this.description = description;
         this.parameters = parameters;

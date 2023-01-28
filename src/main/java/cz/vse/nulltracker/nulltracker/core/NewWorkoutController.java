@@ -13,6 +13,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.Map;
 
 //TODO:DOCS
 //TODO:remap the JSON
@@ -41,7 +42,11 @@ public class NewWorkoutController {
                 JsonObject exerciseObject = exercise.getAsJsonObject();
                 String name = exerciseObject.get("name").getAsString();
                 String description = exerciseObject.get("description").getAsString();
-                allExercises.add(new Exercise(name, description, exerciseObject.get("parameters").getAsJsonObject().asMap()));
+                ArrayList<String> parameters = new ArrayList<>();
+                for (Map.Entry<String, JsonElement> entry : exerciseObject.get("parameters").getAsJsonObject().entrySet()) {
+                    parameters.add(entry.getValue().getAsString());
+                }
+                allExercises.add(new Exercise(name, description, parameters));
             });
         });
 
@@ -58,13 +63,13 @@ public class NewWorkoutController {
             }
         });
 
+        // update the labels with the information from the selected exercise
         activitySelector.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
-                // update the labels with the information from the selected exercise
-                attribute1.setText(newValue.getName());
-                attribute2.setText("Description: " + newValue.getDescription());
-                //attribute3.setText("Parameters: " + newValue.getParameters());
-                //attribute4.setText("Other information: " + newValue.getOtherInformation());
+                attribute1.setText(newValue.getParameters().get(0));
+                attribute2.setText(newValue.getParameters().get(1));
+                attribute3.setText(newValue.getParameters().get(2));
+                attribute4.setText(newValue.getParameters().get(3));
             }
         });
 
