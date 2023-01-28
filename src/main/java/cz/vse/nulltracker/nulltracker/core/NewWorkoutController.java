@@ -22,17 +22,27 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
+import java.util.function.UnaryOperator;
 
 import static cz.vse.nulltracker.nulltracker.database.DatabaseHandler.database;
 
 //TODO:DOCS
-//TODO:Save the activity
 
 /**
  * @author Martin Kadlec
  * @version Last refactor on 28.01.2023
  *
+ * <p>
+ *     Controller for the newWorkout FXML.
+ *     Handles the necessary UI operations to limit the User input
+ *     only to expected values.
+ *     Parses the core data from the exercises.json file.
+ *     Handles the rest dynamically.
+ * </p>
  *
+ * @see LoggedUser
+ * @see LoggedActivity
+ * @see cz.vse.nulltracker.nulltracker.database.DatabaseHandler
  */
 public class NewWorkoutController {
     public ComboBox<Exercise> activitySelector;
@@ -54,7 +64,28 @@ public class NewWorkoutController {
     Random random = new Random();
     double kcalValue;
 
+    /**
+     * Programmatically sets all the JFX elements into their desired states.
+     * Loads the exercises into required format.
+     * Specifies the selection behaviors of UI elements.
+     *
+     * @throws FileNotFoundException If resource does not exist
+     */
     public void initialize () throws FileNotFoundException {
+
+        //format the textFields
+        UnaryOperator<TextFormatter.Change> filter = change -> {
+            String text = change.getText();
+            if (text.matches("[0-9]*")) {
+                return change;
+            }
+            return null;
+        };
+        attribute1Field.setTextFormatter(new TextFormatter<>(filter));
+        attribute2Field.setTextFormatter(new TextFormatter<>(filter));
+        attribute3Field.setTextFormatter(new TextFormatter<>(filter));
+        attribute4Field.setTextFormatter(new TextFormatter<>(filter));
+
 
         //initial UI clear (done in order to avoid FXML manipulation)
         cleanUpPrompts();
@@ -78,7 +109,11 @@ public class NewWorkoutController {
                 for (Map.Entry<String, JsonElement> entry : exerciseObject.get("parameters").getAsJsonObject().entrySet()) {
                     parameters.add(entry.getKey());
                 }
-                allExercises.add(new Exercise(name, description, parameters));
+                ArrayList<String> prompts = new ArrayList<>();
+                for (Map.Entry<String, JsonElement> entry : exerciseObject.get("parameters").getAsJsonObject().entrySet()) {
+                    prompts.add(entry.getValue().getAsString());
+                }
+                allExercises.add(new Exercise(name, description, parameters,prompts));
             });
         });
 
@@ -91,6 +126,7 @@ public class NewWorkoutController {
                 if (empty || item == null || item.getName() == null) {
                     setText(null);
                 } else {
+                    cleanUpFields();
                     setText(item.getName());
                 }
             }
@@ -102,28 +138,33 @@ public class NewWorkoutController {
                 int iterator = 0;
                 int control = newValue.getParameters().size();
                 cleanUpLabels();
+                cleanUpPrompts();
                 disableInactiveFields();
 
                 if (iterator < control) {
                     attribute1.setText(newValue.getParameters() != null ? newValue.getParameters().get(0) : "");
+                    attribute1Field.setPromptText(newValue.getPrompts() != null ? newValue.getPrompts().get(0) : "");
                     attribute1Field.setDisable(false);
                     iterator++;
                 }
 
                 if (iterator < control) {
                     attribute2.setText(newValue.getParameters() != null ? newValue.getParameters().get(1) : "");
+                    attribute2Field.setPromptText(newValue.getPrompts() != null ? newValue.getPrompts().get(1) : "");
                     attribute2Field.setDisable(false);
                     iterator++;
                 }
 
                 if (iterator < control) {
                     attribute3.setText(newValue.getParameters() != null ? newValue.getParameters().get(2) : "");
+                    attribute3Field.setPromptText(newValue.getPrompts() != null ? newValue.getPrompts().get(2) : "");
                     attribute3Field.setDisable(false);
                     iterator++;
                 }
 
                 if (iterator < control) {
                     attribute4.setText(newValue.getParameters() != null ? newValue.getParameters().get(3) : "");
+                    attribute4Field.setPromptText(newValue.getPrompts() != null ? newValue.getPrompts().get(3) : "");
                     attribute4Field.setDisable(false);
                 }
             }
@@ -131,6 +172,10 @@ public class NewWorkoutController {
         });
     }
 
+
+    /**
+     * Disables all text fields.
+     */
     private void disableInactiveFields() {
         attribute1Field.setDisable(true);
         attribute2Field.setDisable(true);
@@ -138,6 +183,9 @@ public class NewWorkoutController {
         attribute4Field.setDisable(true);
     }
 
+    /**
+     * Clears all text prompts from the fields.
+     */
     private void cleanUpPrompts() {
         attribute1Field.setPromptText("");
         attribute2Field.setPromptText("");
@@ -145,6 +193,9 @@ public class NewWorkoutController {
         attribute4Field.setPromptText("");
     }
 
+    /**
+     * Cleans all text field labels
+     */
     private void cleanUpLabels () {
         attribute1.setText("");
         attribute2.setText("");
@@ -153,6 +204,10 @@ public class NewWorkoutController {
     }
 
 
+    /**
+     * Clears all data currently in fields
+     * this is mostly done to prevent incorrect data transmissions.
+     */
     private void cleanUpFields() {
         attribute1Field.clear();
         attribute2Field.clear();
@@ -160,13 +215,19 @@ public class NewWorkoutController {
         attribute4Field.clear();
     }
 
+    /**
+     * Appends the data currently in fields in the temporary
+     * array list for further manipulation.
+     * Clears UI elements after saving,
+     * recalculates KCAL values.
+     */
     public void appendLog() {
-        Map<String,String> placeholderMap = new HashMap<>();
+        Map<String,Double> placeholderMap = new HashMap<>();
 
-        if (!attribute1Field.isDisable()) placeholderMap.put(attribute1.getText(),attribute1Field.getText());
-        if (!attribute2Field.isDisable()) placeholderMap.put(attribute2.getText(),attribute2Field.getText());
-        if (!attribute3Field.isDisable()) placeholderMap.put(attribute3.getText(),attribute3Field.getText());
-        if (!attribute4Field.isDisable()) placeholderMap.put(attribute4.getText(),attribute4Field.getText());
+        if (!attribute1Field.isDisable()) placeholderMap.put(attribute1.getText(), Double.valueOf(attribute1Field.getText()));
+        if (!attribute2Field.isDisable()) placeholderMap.put(attribute2.getText(), Double.valueOf(attribute2Field.getText()));
+        if (!attribute3Field.isDisable()) placeholderMap.put(attribute3.getText(), Double.valueOf(attribute3Field.getText()));
+        if (!attribute4Field.isDisable()) placeholderMap.put(attribute4.getText(), Double.valueOf(attribute4Field.getText()));
         activityLog.add(new LoggedActivity(activitySelector.getValue().getName(),placeholderMap));
         kcalValue = activityLog.size() * 0.67  * random.nextInt(5);
 
@@ -176,6 +237,9 @@ public class NewWorkoutController {
         activitySelector.getSelectionModel().clearSelection();
     }
 
+    /**
+     * Drops all currently saved data.
+     */
     public void dropLog() {
         timestampCalendar.getEditor().clear();
         activityLog.clear();
@@ -186,9 +250,24 @@ public class NewWorkoutController {
         cleanUpFields();
     }
 
+    /**
+     * Attempts to save cached data to the DB.
+     * Checks if log is not empty and if it has timestamp.
+     * Iterates over each element in the array and creates appropriate JSON
+     * DB counterpart.
+     * Batches them together into single document, stamped with user object ID and stamp.
+     * Clears buffers and UI upon creation of the log.
+     * Check wiki for further DB info.
+     *
+     */
     public void saveLog() {
         MongoCollection<Document> collection = database.getCollection("logs");
         ObjectId userId = LoggedUser.LUID;
+
+        if (timestampCalendar.getValue() == null) {
+            showErrorMessage("Není upřesněno datum!");
+            return;
+        }
 
         LocalDate date = timestampCalendar.getValue();
         Instant instant = date.atStartOfDay().toInstant(ZoneOffset.UTC);
@@ -196,11 +275,16 @@ public class NewWorkoutController {
 
         Document logDocument = new Document("belongsTo",userId).append("timestamp",bsonTimestamp);
 
+        if (activityLog.size() == 0) {
+            showErrorMessage("Záznam je prádzný!");
+            return;
+        }
+
         for (LoggedActivity arrayElement: activityLog) {
             String activityName = arrayElement.getName();
-            for (Map.Entry<String,String> entry : arrayElement.getParameters().entrySet()) {
+            for (Map.Entry<String,Double> entry : arrayElement.getParameters().entrySet()) {
                 String key = entry.getKey();
-                String value = entry.getValue();
+                Double value = entry.getValue();
 
                 logDocument.append(key+activityName,value);
             }
@@ -225,5 +309,18 @@ public class NewWorkoutController {
         cleanUpPrompts();
         cleanUpFields();
 
+    }
+
+    /**
+     * Warns user of incorrect DB behavior.
+     *
+     * @param message Text to be displayed
+     */
+    private void showErrorMessage(String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Chyba při logování!");
+        alert.setHeaderText("Chyba při logování!");
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }

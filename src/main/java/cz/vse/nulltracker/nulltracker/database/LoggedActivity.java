@@ -4,9 +4,9 @@ import java.util.Map;
 
 public class LoggedActivity {
     private String name;
-    private Map<String,String> parameters;
+    private final Map<String,Double> parameters;
 
-    public LoggedActivity(String name, Map<String, String> parameters) {
+    public LoggedActivity(String name, Map<String, Double> parameters) {
         this.name = name;
         this.parameters = parameters;
     }
@@ -15,7 +15,7 @@ public class LoggedActivity {
         return name;
     }
 
-    public Map<String, String> getParameters() {
+    public Map<String, Double> getParameters() {
         return parameters;
     }
 }

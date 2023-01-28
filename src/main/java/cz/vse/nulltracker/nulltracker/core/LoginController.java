@@ -83,14 +83,15 @@ public class LoginController {
 
         } catch (Exception e) {
             System.out.println("DB error" + e);
+            showErrorMessage("DB communication Error!");
         }
 
     }
 
     private void showErrorMessage(String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Chyba při přihlášení");
-        alert.setHeaderText("Chyba při přihlášení");
+        alert.setTitle("Chyba při přihlášení!");
+        alert.setHeaderText("Chyba při přihlášení!");
         alert.setContentText(message);
         alert.showAndWait();
     }
