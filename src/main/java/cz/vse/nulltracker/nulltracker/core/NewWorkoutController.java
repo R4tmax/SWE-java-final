@@ -5,6 +5,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -28,6 +29,9 @@ public class NewWorkoutController {
     public TextField attribute2Field;
     public TextField attribute3Field;
     public TextField attribute4Field;
+    public Button buttonSaveLog;
+    public Button buttonDropLog;
+    public Button buttonAppendLong;
 
     public void initialize () throws FileNotFoundException {
 
@@ -122,5 +126,14 @@ public class NewWorkoutController {
         attribute2.setText("");
         attribute3.setText("");
         attribute4.setText("");
+    }
+
+    public void appendLog(MouseEvent mouseEvent) {
+    }
+
+    public void dropLog(MouseEvent mouseEvent) {
+    }
+
+    public void saveLog(MouseEvent mouseEvent) {
     }
 }

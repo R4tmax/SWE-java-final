@@ -75,7 +75,7 @@
                         <TextField prefHeight="38.0" promptText="Počet sérií" HBox.hgrow="ALWAYS" fx:id="attribute4Field"/>
                      </children>
                   </HBox>
-                  <Button mnemonicParsing="false" text="Přidat cvičení">
+                  <Button mnemonicParsing="false" text="Přidat cvičení" fx:id="buttonAppendLong" onMouseClicked="#appendLog">
                      <graphic>
                         <ImageView fitHeight="9.0" fitWidth="9.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -216,7 +216,7 @@
                   <Region VBox.vgrow="ALWAYS" />
                   <HBox alignment="TOP_RIGHT" layoutX="10.0" layoutY="10.0" spacing="30.0">
                      <children>
-                        <Button mnemonicParsing="false" text="Zahodit">
+                        <Button mnemonicParsing="false" text="Zahodit" fx:id="buttonDropLog" onMouseClicked="#dropLog">
                            <graphic>
                               <ImageView fitHeight="8.0" fitWidth="8.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -228,7 +228,7 @@
                               <Cursor fx:constant="HAND" />
                            </cursor>
                         </Button>
-                        <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" text="Uložit cvičení">
+                        <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" text="Uložit cvičení" fx:id="buttonSaveLog" onMouseClicked="#saveLog">
                            <graphic>
                               <ImageView fitHeight="8.0" fitWidth="8.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
