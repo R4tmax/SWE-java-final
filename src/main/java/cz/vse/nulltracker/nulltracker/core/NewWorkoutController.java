@@ -31,10 +31,9 @@ import java.util.function.UnaryOperator;
 
 import static cz.vse.nulltracker.nulltracker.database.DatabaseHandler.database;
 
-//TODO:DOCS
 
 /**
- * @author Martin Kadlec
+ * @author Martin Kadlec, Michal Průcha
  * @version Last refactor on 28.01.2023
  *
  * <p>
@@ -72,7 +71,7 @@ public class NewWorkoutController {
     Random random = new Random();
     double kcalValue;
     Locale locale = new Locale("cs", "CZ");
-    private SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE DD.MM.YYYY", locale);
+    private final SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE dd.MM.yyyy", locale);
 
     /**
      * Programmatically sets all the JFX elements into their desired states.
@@ -186,9 +185,8 @@ public class NewWorkoutController {
             if (newValue != null) {
                 timestampCalendar.setValue(newValue);
                 dateText.setText(dateFormat.format(Date.from(timestampCalendar.getValue().atStartOfDay(ZoneOffset.UTC).toInstant())));
-            }
+            } else timestampCalendar.getEditor().clear();
         });
-        dateText.setText(dateFormat.format(Date.from(timestampCalendar.getValue().atStartOfDay(ZoneOffset.UTC).toInstant())));
 
 
 
@@ -251,13 +249,24 @@ public class NewWorkoutController {
         if (!attribute3Field.isDisable()) placeholderMap.put(attribute3.getText(), Double.valueOf(attribute3Field.getText()));
         if (!attribute4Field.isDisable()) placeholderMap.put(attribute4.getText(), Double.valueOf(attribute4Field.getText()));
         activityLog.add(new LoggedActivity(activitySelector.getValue().getName(),placeholderMap));
-        kcalValue = activityLog.size() * 0.67  * random.nextInt(5);
+
 
         cleanUpFields();
         cleanUpLabels();
         cleanUpPrompts();
         activitySelector.getSelectionModel().clearSelection();
         refreshSummaryVBox();
+        recalculateKcal();
+    }
+
+    /**
+     * Alters the KCAL values
+     * based on the log contents
+     */
+    private void recalculateKcal() {
+        kcalValue = activityLog.size() * 0.67 * Math.abs(random.nextInt(50));
+        kcalValue = Math.round(kcalValue);
+        kcalText.setText("Celkem " + kcalValue + " kcal");
     }
 
     /**
@@ -271,6 +280,9 @@ public class NewWorkoutController {
         cleanUpLabels();
         cleanUpPrompts();
         cleanUpFields();
+        refreshSummaryVBox();
+        recalculateKcal();
+        dateText.setText("");
     }
 
     /**
@@ -331,7 +343,10 @@ public class NewWorkoutController {
         cleanUpLabels();
         cleanUpPrompts();
         cleanUpFields();
-
+        activityLog.clear();
+        dateText.setText("");
+        refreshSummaryVBox();
+        recalculateKcal();
     }
 
     /**
@@ -348,6 +363,11 @@ public class NewWorkoutController {
     }
 
 
+    /**
+     * Handles and refreshes the active log summary
+     * on demand.
+     * Ads log modification processing.
+     */
     private void refreshSummaryVBox(){
         summaryVBox.getChildren().clear();
         activityLog.forEach(loggedActivity -> {
@@ -359,6 +379,7 @@ public class NewWorkoutController {
             crossIcon.setOnMouseClicked(event -> {
                 activityLog.remove(loggedActivity);
                 refreshSummaryVBox();
+                recalculateKcal();
             });
             crossIcon.setCursor(Cursor.HAND);
             loggedActivityHBox.getChildren().add(crossIcon);
@@ -375,7 +396,7 @@ public class NewWorkoutController {
 
             summaryVBox.getChildren().add(loggedActivityHBox);
         });
-        kcalText.setText(String.valueOf("Celkem " + kcalValue + " kcal"));
+        kcalText.setText("Celkem " + kcalValue + " kcal");
     }
 
 
