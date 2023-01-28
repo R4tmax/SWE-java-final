@@ -16,8 +16,8 @@
           "description": "Jumping jacks are a classic cardio exercise that gets your heart rate up and works multiple muscle groups. Stand with your feet together and arms at your sides, then jump and raise your arms above your head.",
           "parameters": {
             "time": "minutes",
-            "repetitions": "",
-            "sets": ""
+            "repetitions": "number of",
+            "sets": "number of"
           }
         },
         {
@@ -38,8 +38,8 @@
           "description": "Push-ups are a classic bodyweight exercise that works the chest, shoulders, and triceps. Start in a plank position with your hands shoulder-width apart, then lower your body until your chest nearly touches the ground.",
           "parameters": {
             "time": "minutes",
-            "repetitions": "",
-            "sets": ""
+            "repetitions": "number of",
+            "sets": "number of"
           }
         },
         {
@@ -47,8 +47,8 @@
           "description": "Pull-ups are a great exercise for building upper body strength and endurance. Use an overhead bar or pull-up bar, and grip it with your palms facing away from you. Pull your body up until your chin is above the bar.",
           "parameters": {
             "time": "minutes",
-            "repetitions": "",
-            "sets": ""
+            "repetitions": "number of",
+            "sets": "number of"
           }
         },
         {
@@ -56,8 +56,8 @@
           "description": "Squats are a compound exercise that works the legs, hips, and core. Stand with your feet shoulder-width apart, then lower your body as if you were sitting back into a chair.",
           "parameters": {
             "time": "minutes",
-            "repetitions": "",
-            "sets": ""
+            "repetitions": "number of",
+            "sets": "number of"
           }
         },
         {
@@ -66,8 +66,8 @@
           "parameters": {
             "time": "minutes",
             "weight": "kg",
-            "repetitions": "",
-            "sets": ""
+            "repetitions": "number of",
+            "sets": "number of"
           }
         },
         {
@@ -75,8 +75,8 @@
           "description": "Dips are a great exercise for the chest, triceps and shoulders. You can perform dips using parallel bars or by using two sturdy chairs or benches. Start by placing your hands on the bars or chairs, with your arms straight and your body suspended above the ground. Lower your body by bending your elbows, then push back up to the starting position.",
           "parameters": {
             "time": "minutes",
-            "repetitions": "",
-            "sets": ""
+            "repetitions": "number of",
+            "sets": "number of"
           }
         }
       ]
@@ -89,8 +89,8 @@
           "description": "Neck rolls help to release tension in the neck and shoulders. Start by sitting or standing with good posture, then gently roll your head in a circular motion, going from one shoulder to the other.",
           "parameters": {
             "time": "minutes",
-            "repetitions": "",
-            "sets": ""
+            "repetitions": "number of",
+            "sets": "number of"
           }
         },
         {
@@ -98,8 +98,8 @@
           "description": "Shoulder stretches help to release tension in the shoulders and upper back. Start by standing or sitting with good posture, then raise one arm and use the other hand to gently pull it across your chest.",
           "parameters": {
             "time": "minutes",
-            "repetitions": "",
-            "sets": ""
+            "repetitions": "number of",
+            "sets": "number of"
           }
         },
         {
@@ -107,8 +107,8 @@
           "description": "Hamstring stretches help to release tension in the back of the legs. Start by sitting on the ground with both legs extended straight in front of you. Slowly reach forward, trying to touch your toes.",
           "parameters": {
             "time": "minutes",
-            "repetitions": "",
-            "sets": ""
+            "repetitions": "number of",
+            "sets": "number of"
           }
         }
       ]
