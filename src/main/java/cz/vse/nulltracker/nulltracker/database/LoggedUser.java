@@ -16,6 +16,7 @@ public class LoggedUser {
     public static String LUemail;
     public static ObjectId LUID;
 
+
     /**
      * Copies the logged data to the static variables
      *
@@ -29,4 +30,27 @@ public class LoggedUser {
         LUID = userId;
     }
 
+    public static String getLUname() {
+        return LUname;
+    }
+
+    public static void setLUname(String LUname) {
+        LoggedUser.LUname = LUname;
+    }
+
+    public static ObjectId getLUID() {
+        return LUID;
+    }
+
+    public static void setLUID(ObjectId LUID) {
+        LoggedUser.LUID = LUID;
+    }
+
+    public static String getLUemail() {
+        return LUemail;
+    }
+
+    public static void setLUemail(String LUemail) {
+        LoggedUser.LUemail = LUemail;
+    }
 }
