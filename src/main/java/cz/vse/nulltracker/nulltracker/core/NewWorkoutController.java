@@ -71,7 +71,7 @@ public class NewWorkoutController {
     Random random = new Random();
     double kcalValue;
     Locale locale = new Locale("cs", "CZ");
-    private SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE DD.MM.YYYY", locale);
+    private final SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE dd.MM.yyyy", locale);
 
     /**
      * Programmatically sets all the JFX elements into their desired states.
@@ -279,6 +279,7 @@ public class NewWorkoutController {
         cleanUpFields();
         refreshSummaryVBox();
         recalculateKcal();
+        dateText.setText("");
     }
 
     /**
@@ -340,6 +341,7 @@ public class NewWorkoutController {
         cleanUpPrompts();
         cleanUpFields();
         activityLog.clear();
+        dateText.setText("");
         refreshSummaryVBox();
         recalculateKcal();
     }
