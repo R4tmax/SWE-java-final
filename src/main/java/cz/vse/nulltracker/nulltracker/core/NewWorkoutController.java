@@ -261,7 +261,7 @@ public class NewWorkoutController {
     }
 
     private void recalculateKcal() {
-        kcalValue = activityLog.size() * 0.67  * random.nextInt(5);
+        kcalValue = activityLog.size() * 0.67 * Math.abs(random.nextInt(50));
         kcalValue = Math.round(kcalValue);
         kcalText.setText("Celkem " + kcalValue + " kcal");
     }
@@ -341,6 +341,7 @@ public class NewWorkoutController {
         cleanUpFields();
         activityLog.clear();
         refreshSummaryVBox();
+        recalculateKcal();
     }
 
     /**
