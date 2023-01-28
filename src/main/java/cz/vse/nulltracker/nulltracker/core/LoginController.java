@@ -76,7 +76,6 @@ public class LoginController {
                     passwordInput.clear();
                     showErrorMessage("Zadejte prosím správné přihlašovací údaje.");
                 } else {
-                    System.out.println("Login successful!");
                     LoggedUser.saveUserData(entry.getString("name"),entry.getString("login"),entry.getObjectId("_id"));
                     linkToDashboard();
                 }

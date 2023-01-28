@@ -14,10 +14,14 @@ import java.util.ArrayList;
 import java.util.Map;
 
 //TODO:DOCS
-//TODO:remap the JSON
-//TODO:Handle the Labels
 //TODO:Save the activity
 
+/**
+ * @author Martin Kadlec
+ * @version Last refactor on 28.01.2023
+ *
+ *
+ */
 public class NewWorkoutController {
     public ComboBox<Exercise> activitySelector;
     public DatePicker timestampCalendar;
@@ -35,10 +39,12 @@ public class NewWorkoutController {
 
     public void initialize () throws FileNotFoundException {
 
+        //initial UI clear (done in order to avoid FXML manipulation)
         cleanUpPrompts();
         cleanUpLabels();
         disableInactiveFields(true);
 
+        //read and parse the contents of the JSON
         ArrayList<Exercise> allExercises = new ArrayList<>();
         File input = new File("src/main/resources/cz/vse/nulltracker/nulltracker/core/exercises.json");
         JsonElement fileElement = JsonParser.parseReader(new FileReader(input));
@@ -59,6 +65,7 @@ public class NewWorkoutController {
             });
         });
 
+        //process the data into the ComboBox
         activitySelector.getItems().addAll(allExercises);
         activitySelector.setCellFactory(param -> new ListCell<>() {
             @Override
