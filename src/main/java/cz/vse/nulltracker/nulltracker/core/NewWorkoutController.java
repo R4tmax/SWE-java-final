@@ -31,7 +31,6 @@ import java.util.function.UnaryOperator;
 
 import static cz.vse.nulltracker.nulltracker.database.DatabaseHandler.database;
 
-//TODO:DOCS
 
 /**
  * @author Martin Kadlec
@@ -251,13 +250,20 @@ public class NewWorkoutController {
         if (!attribute3Field.isDisable()) placeholderMap.put(attribute3.getText(), Double.valueOf(attribute3Field.getText()));
         if (!attribute4Field.isDisable()) placeholderMap.put(attribute4.getText(), Double.valueOf(attribute4Field.getText()));
         activityLog.add(new LoggedActivity(activitySelector.getValue().getName(),placeholderMap));
-        kcalValue = activityLog.size() * 0.67  * random.nextInt(5);
+
 
         cleanUpFields();
         cleanUpLabels();
         cleanUpPrompts();
         activitySelector.getSelectionModel().clearSelection();
         refreshSummaryVBox();
+        recalculateKcal();
+    }
+
+    private void recalculateKcal() {
+        kcalValue = activityLog.size() * 0.67  * random.nextInt(5);
+        kcalValue = Math.round(kcalValue);
+        kcalText.setText("Celkem " + kcalValue + " kcal");
     }
 
     /**
@@ -271,6 +277,8 @@ public class NewWorkoutController {
         cleanUpLabels();
         cleanUpPrompts();
         cleanUpFields();
+        refreshSummaryVBox();
+        recalculateKcal();
     }
 
     /**
@@ -331,7 +339,8 @@ public class NewWorkoutController {
         cleanUpLabels();
         cleanUpPrompts();
         cleanUpFields();
-
+        activityLog.clear();
+        refreshSummaryVBox();
     }
 
     /**
@@ -359,6 +368,7 @@ public class NewWorkoutController {
             crossIcon.setOnMouseClicked(event -> {
                 activityLog.remove(loggedActivity);
                 refreshSummaryVBox();
+                recalculateKcal();
             });
             crossIcon.setCursor(Cursor.HAND);
             loggedActivityHBox.getChildren().add(crossIcon);
@@ -375,7 +385,7 @@ public class NewWorkoutController {
 
             summaryVBox.getChildren().add(loggedActivityHBox);
         });
-        kcalText.setText(String.valueOf("Celkem " + kcalValue + " kcal"));
+        kcalText.setText("Celkem " + kcalValue + " kcal");
     }
 
 
