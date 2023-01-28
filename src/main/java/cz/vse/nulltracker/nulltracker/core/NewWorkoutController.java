@@ -66,16 +66,30 @@ public class NewWorkoutController {
         // update the labels with the information from the selected exercise
         activitySelector.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
-                attribute1.setText(newValue.getParameters().get(0));
-                attribute2.setText(newValue.getParameters().get(1));
-                attribute3.setText(newValue.getParameters().get(2));
-                attribute4.setText(newValue.getParameters().get(3));
+                int iterator = 0;
+                int control = newValue.getParameters().size();
+
+                if (iterator < control) {
+                    attribute1.setText(newValue.getParameters() != null ? newValue.getParameters().get(0) : "");
+                    iterator++;
+                }
+
+                if (iterator < control) {
+                    attribute2.setText(newValue.getParameters() != null ? newValue.getParameters().get(1) : "");
+                    iterator++;
+                }
+
+                if (iterator < control) {
+                    attribute3.setText(newValue.getParameters() != null ? newValue.getParameters().get(2) : "");
+                    iterator++;
+                }
+
+                if (iterator < control) {
+                    attribute4.setText(newValue.getParameters() != null ? newValue.getParameters().get(3) : "");
+                }
             }
+
         });
 
     }
-
-
-
-
 }
