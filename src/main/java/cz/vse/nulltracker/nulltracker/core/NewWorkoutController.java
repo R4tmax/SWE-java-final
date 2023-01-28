@@ -51,6 +51,9 @@ public class NewWorkoutController {
 
     public ArrayList<LoggedActivity> activityLog = new ArrayList<>();
 
+    Random random = new Random();
+    double kcalValue;
+
     public void initialize () throws FileNotFoundException {
 
         //initial UI clear (done in order to avoid FXML manipulation)
@@ -165,6 +168,7 @@ public class NewWorkoutController {
         if (!attribute3Field.isDisable()) placeholderMap.put(attribute3.getText(),attribute3Field.getText());
         if (!attribute4Field.isDisable()) placeholderMap.put(attribute4.getText(),attribute4Field.getText());
         activityLog.add(new LoggedActivity(activitySelector.getValue().getName(),placeholderMap));
+        kcalValue = activityLog.size() * 0.67  * random.nextInt(5);
 
         cleanUpFields();
         cleanUpLabels();
@@ -173,6 +177,7 @@ public class NewWorkoutController {
     }
 
     public void dropLog() {
+        timestampCalendar.getEditor().clear();
         activityLog.clear();
         activitySelector.getSelectionModel().clearSelection();
         disableInactiveFields();
@@ -201,8 +206,6 @@ public class NewWorkoutController {
             }
         }
 
-        Random random = new Random();
-        double kcalValue = activityLog.size() * 1.07  * random.nextInt(5);
         logDocument.append("KCAL",kcalValue);
 
         try {
@@ -211,6 +214,16 @@ public class NewWorkoutController {
             System.out.println("DB error" + e);
         }
 
+
+        //TODO: redirect to log history/dashboard
+        System.out.println("Log creation successful!");
+
+        timestampCalendar.getEditor().clear();
+        activitySelector.getSelectionModel().clearSelection();
+        disableInactiveFields();
+        cleanUpLabels();
+        cleanUpPrompts();
+        cleanUpFields();
 
     }
 }
