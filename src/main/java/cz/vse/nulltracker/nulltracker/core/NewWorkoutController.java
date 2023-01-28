@@ -27,13 +27,22 @@ import java.util.function.UnaryOperator;
 import static cz.vse.nulltracker.nulltracker.database.DatabaseHandler.database;
 
 //TODO:DOCS
-//TODO:Save the activity
 
 /**
  * @author Martin Kadlec
  * @version Last refactor on 28.01.2023
  *
+ * <p>
+ *     Controller for the newWorkout FXML.
+ *     Handles the necessary UI operations to limit the User input
+ *     only to expected values.
+ *     Parses the core data from the exercises.json file.
+ *     Handles the rest dynamically.
+ * </p>
  *
+ * @see LoggedUser
+ * @see LoggedActivity
+ * @see cz.vse.nulltracker.nulltracker.database.DatabaseHandler
  */
 public class NewWorkoutController {
     public ComboBox<Exercise> activitySelector;
@@ -55,6 +64,13 @@ public class NewWorkoutController {
     Random random = new Random();
     double kcalValue;
 
+    /**
+     * Programmatically sets all the JFX elements into their desired states.
+     * Loads the exercises into required format.
+     * Specifies the selection behaviors of UI elements.
+     *
+     * @throws FileNotFoundException If resource does not exist
+     */
     public void initialize () throws FileNotFoundException {
 
         //format the textFields
@@ -157,6 +173,9 @@ public class NewWorkoutController {
     }
 
 
+    /**
+     * Disables all text fields.
+     */
     private void disableInactiveFields() {
         attribute1Field.setDisable(true);
         attribute2Field.setDisable(true);
@@ -164,6 +183,9 @@ public class NewWorkoutController {
         attribute4Field.setDisable(true);
     }
 
+    /**
+     * Clears all text prompts from the fields.
+     */
     private void cleanUpPrompts() {
         attribute1Field.setPromptText("");
         attribute2Field.setPromptText("");
@@ -171,6 +193,9 @@ public class NewWorkoutController {
         attribute4Field.setPromptText("");
     }
 
+    /**
+     * Cleans all text field labels
+     */
     private void cleanUpLabels () {
         attribute1.setText("");
         attribute2.setText("");
@@ -179,6 +204,10 @@ public class NewWorkoutController {
     }
 
 
+    /**
+     * Clears all data currently in fields
+     * this is mostly done to prevent incorrect data transmissions.
+     */
     private void cleanUpFields() {
         attribute1Field.clear();
         attribute2Field.clear();
@@ -186,6 +215,12 @@ public class NewWorkoutController {
         attribute4Field.clear();
     }
 
+    /**
+     * Appends the data currently in fields in the temporary
+     * array list for further manipulation.
+     * Clears UI elements after saving,
+     * recalculates KCAL values.
+     */
     public void appendLog() {
         Map<String,Double> placeholderMap = new HashMap<>();
 
@@ -202,6 +237,9 @@ public class NewWorkoutController {
         activitySelector.getSelectionModel().clearSelection();
     }
 
+    /**
+     * Drops all currently saved data.
+     */
     public void dropLog() {
         timestampCalendar.getEditor().clear();
         activityLog.clear();
@@ -212,6 +250,16 @@ public class NewWorkoutController {
         cleanUpFields();
     }
 
+    /**
+     * Attempts to save cached data to the DB.
+     * Checks if log is not empty and if it has timestamp.
+     * Iterates over each element in the array and creates appropriate JSON
+     * DB counterpart.
+     * Batches them together into single document, stamped with user object ID and stamp.
+     * Clears buffers and UI upon creation of the log.
+     * Check wiki for further DB info.
+     *
+     */
     public void saveLog() {
         MongoCollection<Document> collection = database.getCollection("logs");
         ObjectId userId = LoggedUser.LUID;
@@ -263,6 +311,11 @@ public class NewWorkoutController {
 
     }
 
+    /**
+     * Warns user of incorrect DB behavior.
+     *
+     * @param message Text to be displayed
+     */
     private void showErrorMessage(String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Chyba při logování!");
