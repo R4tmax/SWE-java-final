@@ -42,7 +42,7 @@
                               <Insets right="10.0" />
                            </HBox.margin>
                         </Label>
-                        <TextField prefHeight="38.0" promptText="Počet sérií" styleClass="text-field" HBox.hgrow="ALWAYS" />
+                        <TextField prefHeight="38.0" promptText="Počet sérií" styleClass="text-field" HBox.hgrow="ALWAYS" fx:id="attribute1Field"/>
                      </children>
                   </HBox>
                   <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="127.0">
@@ -52,7 +52,7 @@
                               <Insets right="10.0" />
                            </HBox.margin>
                         </Label>
-                        <TextField prefHeight="38.0" promptText="Počet sérií" HBox.hgrow="ALWAYS" />
+                        <TextField prefHeight="38.0" promptText="Počet sérií" HBox.hgrow="ALWAYS" fx:id="attribute2Field"/>
                      </children>
                   </HBox>
                   <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="180.0">
@@ -62,7 +62,7 @@
                               <Insets right="10.0" />
                            </HBox.margin>
                         </Label>
-                        <TextField prefHeight="38.0" promptText="Počet sérií" HBox.hgrow="ALWAYS" />
+                        <TextField prefHeight="38.0" promptText="Počet sérií" HBox.hgrow="ALWAYS" fx:id="attribute3Field"/>
                      </children>
                   </HBox>
                   <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="309.0">
@@ -72,7 +72,7 @@
                               <Insets right="10.0" />
                            </HBox.margin>
                         </Label>
-                        <TextField prefHeight="38.0" promptText="Počet sérií" HBox.hgrow="ALWAYS" />
+                        <TextField prefHeight="38.0" promptText="Počet sérií" HBox.hgrow="ALWAYS" fx:id="attribute4Field"/>
                      </children>
                   </HBox>
                   <Button mnemonicParsing="false" text="Přidat cvičení">
