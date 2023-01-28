@@ -9,6 +9,7 @@ import javafx.scene.text.Text;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Map;
 
 
 public class AllExercisesController {
@@ -35,7 +36,11 @@ public class AllExercisesController {
                 JsonObject exerciseObject = exercise.getAsJsonObject();
                 String name = exerciseObject.get("name").getAsString();
                 String description = exerciseObject.get("description").getAsString();
-                exercises.add(new Exercise(name, description, exerciseObject.get("parameters").getAsJsonObject().asMap()));
+                ArrayList<String> parameters = new ArrayList<>();
+                for (Map.Entry<String, JsonElement> entry : exerciseObject.get("parameters").getAsJsonObject().entrySet()) {
+                    parameters.add(entry.getValue().getAsString());
+                }
+                exercises.add(new Exercise(name, description, parameters));
             });
 
             HBox categoryBox = new HBox();

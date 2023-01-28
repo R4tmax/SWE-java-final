@@ -9,4 +9,5 @@ module cz.vse.nulltracker.nulltracker {
 
     opens cz.vse.nulltracker.nulltracker.core to javafx.fxml;
     exports cz.vse.nulltracker.nulltracker.core;
+    exports cz.vse.nulltracker.nulltracker.database;
 }
