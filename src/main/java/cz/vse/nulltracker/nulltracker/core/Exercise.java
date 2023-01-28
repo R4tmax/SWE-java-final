@@ -10,6 +10,7 @@ public class Exercise {
     private String name;
     private String description;
     private ArrayList<String> parameters;
+    private ArrayList<String> prompts;
 
     public String getName() {
         return name;
@@ -28,10 +29,15 @@ public class Exercise {
         return parameters;
     }
 
-    public Exercise(String name, String description, ArrayList<String> parameters) {
+    public ArrayList<String> getPrompts() {
+        return prompts;
+    }
+
+    public Exercise(String name, String description, ArrayList<String> parameters, ArrayList<String> prompts) {
         this.name = name;
         this.description = description;
         this.parameters = parameters;
+        this.prompts = prompts;
     }
 
     @Override

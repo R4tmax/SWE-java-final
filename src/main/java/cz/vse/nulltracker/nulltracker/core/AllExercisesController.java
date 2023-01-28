@@ -40,7 +40,7 @@ public class AllExercisesController {
                 for (Map.Entry<String, JsonElement> entry : exerciseObject.get("parameters").getAsJsonObject().entrySet()) {
                     parameters.add(entry.getValue().getAsString());
                 }
-                exercises.add(new Exercise(name, description, parameters));
+                exercises.add(new Exercise(name, description, parameters, null));
             });
 
             HBox categoryBox = new HBox();

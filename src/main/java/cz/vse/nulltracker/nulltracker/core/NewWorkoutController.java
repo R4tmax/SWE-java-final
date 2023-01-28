@@ -93,7 +93,11 @@ public class NewWorkoutController {
                 for (Map.Entry<String, JsonElement> entry : exerciseObject.get("parameters").getAsJsonObject().entrySet()) {
                     parameters.add(entry.getKey());
                 }
-                allExercises.add(new Exercise(name, description, parameters));
+                ArrayList<String> prompts = new ArrayList<>();
+                for (Map.Entry<String, JsonElement> entry : exerciseObject.get("parameters").getAsJsonObject().entrySet()) {
+                    prompts.add(entry.getValue().getAsString());
+                }
+                allExercises.add(new Exercise(name, description, parameters,prompts));
             });
         });
 
@@ -118,28 +122,33 @@ public class NewWorkoutController {
                 int iterator = 0;
                 int control = newValue.getParameters().size();
                 cleanUpLabels();
+                cleanUpPrompts();
                 disableInactiveFields();
 
                 if (iterator < control) {
                     attribute1.setText(newValue.getParameters() != null ? newValue.getParameters().get(0) : "");
+                    attribute1Field.setPromptText(newValue.getPrompts() != null ? newValue.getPrompts().get(0) : "");
                     attribute1Field.setDisable(false);
                     iterator++;
                 }
 
                 if (iterator < control) {
                     attribute2.setText(newValue.getParameters() != null ? newValue.getParameters().get(1) : "");
+                    attribute2Field.setPromptText(newValue.getPrompts() != null ? newValue.getPrompts().get(1) : "");
                     attribute2Field.setDisable(false);
                     iterator++;
                 }
 
                 if (iterator < control) {
                     attribute3.setText(newValue.getParameters() != null ? newValue.getParameters().get(2) : "");
+                    attribute3Field.setPromptText(newValue.getPrompts() != null ? newValue.getPrompts().get(2) : "");
                     attribute3Field.setDisable(false);
                     iterator++;
                 }
 
                 if (iterator < control) {
                     attribute4.setText(newValue.getParameters() != null ? newValue.getParameters().get(3) : "");
+                    attribute4Field.setPromptText(newValue.getPrompts() != null ? newValue.getPrompts().get(3) : "");
                     attribute4Field.setDisable(false);
                 }
             }
