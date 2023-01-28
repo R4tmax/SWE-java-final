@@ -8,7 +8,6 @@ import com.mongodb.client.MongoCollection;
 import cz.vse.nulltracker.nulltracker.database.LoggedActivity;
 import cz.vse.nulltracker.nulltracker.database.LoggedUser;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
 import org.bson.BsonTimestamp;
 import org.bson.Document;
 import org.bson.types.ObjectId;
@@ -18,12 +17,11 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.time.Instant;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Date;
+import java.util.Random;
 
 import static cz.vse.nulltracker.nulltracker.database.DatabaseHandler.database;
 
@@ -167,6 +165,11 @@ public class NewWorkoutController {
         if (!attribute3Field.isDisable()) placeholderMap.put(attribute3.getText(),attribute3Field.getText());
         if (!attribute4Field.isDisable()) placeholderMap.put(attribute4.getText(),attribute4Field.getText());
         activityLog.add(new LoggedActivity(activitySelector.getValue().getName(),placeholderMap));
+
+        cleanUpFields();
+        cleanUpLabels();
+        cleanUpPrompts();
+        activitySelector.getSelectionModel().clearSelection();
     }
 
     public void dropLog() {
@@ -194,9 +197,13 @@ public class NewWorkoutController {
                 String key = entry.getKey();
                 String value = entry.getValue();
 
-                logDocument.append(activityName+key,value);
+                logDocument.append(key+activityName,value);
             }
         }
+
+        Random random = new Random();
+        double kcalValue = activityLog.size() * 1.07  * random.nextInt(5);
+        logDocument.append("KCAL",kcalValue);
 
         try {
             collection.insertOne(logDocument);
