@@ -90,8 +90,8 @@
                             <mainClass>cz.vse.nulltracker.nulltracker/cz.vse.nulltracker.nulltracker.Main
                             </mainClass>
                             <launcher>app</launcher>
-                            <jlinkZipName>app</jlinkZipName>
-                            <jlinkImageName>app</jlinkImageName>
+                            <jlinkZipName>${project.artifactId}-${project.version}</jlinkZipName>
+                            <jlinkImageName>${project.artifactId}-${project.version}</jlinkImageName>
                             <noManPages>true</noManPages>
                             <stripDebug>true</stripDebug>
                             <noHeaderFiles>true</noHeaderFiles>
