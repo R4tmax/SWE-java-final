@@ -4,16 +4,28 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.mongodb.client.MongoCollection;
 import cz.vse.nulltracker.nulltracker.database.LoggedActivity;
+import cz.vse.nulltracker.nulltracker.database.LoggedUser;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
+import org.bson.BsonTimestamp;
+import org.bson.Document;
+import org.bson.types.ObjectId;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Date;
+
+import static cz.vse.nulltracker.nulltracker.database.DatabaseHandler.database;
 
 //TODO:DOCS
 //TODO:Save the activity
@@ -167,5 +179,31 @@ public class NewWorkoutController {
     }
 
     public void saveLog() {
+        MongoCollection<Document> collection = database.getCollection("logs");
+        ObjectId userId = LoggedUser.LUID;
+
+        LocalDate date = timestampCalendar.getValue();
+        Instant instant = date.atStartOfDay().toInstant(ZoneOffset.UTC);
+        BsonTimestamp bsonTimestamp = new BsonTimestamp((int) instant.getEpochSecond(), 0);
+
+        Document logDocument = new Document("belongsTo",userId).append("timestamp",bsonTimestamp);
+
+        for (LoggedActivity arrayElement: activityLog) {
+            String activityName = arrayElement.getName();
+            for (Map.Entry<String,String> entry : arrayElement.getParameters().entrySet()) {
+                String key = entry.getKey();
+                String value = entry.getValue();
+
+                logDocument.append(activityName+key,value);
+            }
+        }
+
+        try {
+            collection.insertOne(logDocument);
+        } catch (Exception e) {
+            System.out.println("DB error" + e);
+        }
+
+
     }
 }
