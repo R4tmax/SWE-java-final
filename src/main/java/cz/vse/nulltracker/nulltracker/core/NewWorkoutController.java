@@ -185,9 +185,8 @@ public class NewWorkoutController {
             if (newValue != null) {
                 timestampCalendar.setValue(newValue);
                 dateText.setText(dateFormat.format(Date.from(timestampCalendar.getValue().atStartOfDay(ZoneOffset.UTC).toInstant())));
-            }
+            } else timestampCalendar.getEditor().clear();
         });
-        dateText.setText(dateFormat.format(Date.from(timestampCalendar.getValue().atStartOfDay(ZoneOffset.UTC).toInstant())));
 
 
 
