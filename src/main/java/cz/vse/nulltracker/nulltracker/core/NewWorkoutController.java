@@ -7,7 +7,14 @@ import com.google.gson.JsonParser;
 import com.mongodb.client.MongoCollection;
 import cz.vse.nulltracker.nulltracker.database.LoggedActivity;
 import cz.vse.nulltracker.nulltracker.database.LoggedUser;
+import javafx.geometry.Pos;
+import javafx.scene.Cursor;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import org.bson.BsonTimestamp;
 import org.bson.Document;
 import org.bson.types.ObjectId;
@@ -15,13 +22,12 @@ import org.bson.types.ObjectId;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneOffset;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 import static cz.vse.nulltracker.nulltracker.database.DatabaseHandler.database;
 
@@ -50,9 +56,14 @@ public class NewWorkoutController {
     public Button buttonAppendLong;
 
     public ArrayList<LoggedActivity> activityLog = new ArrayList<>();
+    public VBox summaryVBox;
+    public Text kcalText;
+    public Text dateText;
 
     Random random = new Random();
     double kcalValue;
+    Locale locale = new Locale("cs", "CZ");
+    private SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE DD.MM.YYYY", locale);
 
     public void initialize () throws FileNotFoundException {
 
@@ -129,6 +140,18 @@ public class NewWorkoutController {
             }
 
         });
+
+        timestampCalendar.setValue(LocalDate.now());
+        timestampCalendar.valueProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                timestampCalendar.setValue(newValue);
+                dateText.setText(dateFormat.format(Date.from(timestampCalendar.getValue().atStartOfDay(ZoneOffset.UTC).toInstant())));
+            }
+        });
+        dateText.setText(dateFormat.format(Date.from(timestampCalendar.getValue().atStartOfDay(ZoneOffset.UTC).toInstant())));
+
+
+
     }
 
     private void disableInactiveFields() {
@@ -174,6 +197,7 @@ public class NewWorkoutController {
         cleanUpLabels();
         cleanUpPrompts();
         activitySelector.getSelectionModel().clearSelection();
+        refreshSummaryVBox();
     }
 
     public void dropLog() {
@@ -226,4 +250,37 @@ public class NewWorkoutController {
         cleanUpFields();
 
     }
+
+
+    private void refreshSummaryVBox(){
+        summaryVBox.getChildren().clear();
+        activityLog.forEach(loggedActivity -> {
+            HBox loggedActivityHBox = new HBox();
+            loggedActivityHBox.setSpacing(20);
+            loggedActivityHBox.setAlignment(Pos.CENTER_LEFT);
+
+            ImageView crossIcon = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("icons/icon_cross_black.png")), 8, 8, true, true));
+            crossIcon.setOnMouseClicked(event -> {
+                activityLog.remove(loggedActivity);
+                refreshSummaryVBox();
+            });
+            crossIcon.setCursor(Cursor.HAND);
+            loggedActivityHBox.getChildren().add(crossIcon);
+
+            Text activityName = new Text(loggedActivity.getName());
+            activityName.getStyleClass().add("bold");
+            loggedActivityHBox.getChildren().add(activityName);
+
+            loggedActivity.getParameters().forEach((key, value) -> {
+                Text parameter = new Text(value + " " + key);
+                parameter.getStyleClass().add("opacity-50");
+                loggedActivityHBox.getChildren().add(parameter);
+            });
+
+            summaryVBox.getChildren().add(loggedActivityHBox);
+        });
+        kcalText.setText(String.valueOf("Celkem " + kcalValue + " kcal"));
+    }
+
+
 }
