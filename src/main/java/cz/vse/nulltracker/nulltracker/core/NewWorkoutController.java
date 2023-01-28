@@ -44,7 +44,7 @@ public class NewWorkoutController {
                 String description = exerciseObject.get("description").getAsString();
                 ArrayList<String> parameters = new ArrayList<>();
                 for (Map.Entry<String, JsonElement> entry : exerciseObject.get("parameters").getAsJsonObject().entrySet()) {
-                    parameters.add(entry.getValue().getAsString());
+                    parameters.add(entry.getKey().toString());
                 }
                 allExercises.add(new Exercise(name, description, parameters));
             });
