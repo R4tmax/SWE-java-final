@@ -33,7 +33,7 @@ import static cz.vse.nulltracker.nulltracker.database.DatabaseHandler.database;
 
 
 /**
- * @author Martin Kadlec
+ * @author Martin Kadlec, Michal Průcha
  * @version Last refactor on 28.01.2023
  *
  * <p>
@@ -260,6 +260,10 @@ public class NewWorkoutController {
         recalculateKcal();
     }
 
+    /**
+     * Alters the KCAL values
+     * based on the log contents
+     */
     private void recalculateKcal() {
         kcalValue = activityLog.size() * 0.67 * Math.abs(random.nextInt(50));
         kcalValue = Math.round(kcalValue);
@@ -360,6 +364,11 @@ public class NewWorkoutController {
     }
 
 
+    /**
+     * Handles and refreshes the active log summary
+     * on demand.
+     * Ads log modification processing.
+     */
     private void refreshSummaryVBox(){
         summaryVBox.getChildren().clear();
         activityLog.forEach(loggedActivity -> {
