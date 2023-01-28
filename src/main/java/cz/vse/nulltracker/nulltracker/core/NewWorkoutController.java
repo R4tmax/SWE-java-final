@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
+import java.util.function.UnaryOperator;
 
 import static cz.vse.nulltracker.nulltracker.database.DatabaseHandler.database;
 
@@ -55,6 +56,20 @@ public class NewWorkoutController {
     double kcalValue;
 
     public void initialize () throws FileNotFoundException {
+
+        //format the textFields
+        UnaryOperator<TextFormatter.Change> filter = change -> {
+            String text = change.getText();
+            if (text.matches("[0-9]*")) {
+                return change;
+            }
+            return null;
+        };
+        attribute1Field.setTextFormatter(new TextFormatter<>(filter));
+        attribute2Field.setTextFormatter(new TextFormatter<>(filter));
+        attribute3Field.setTextFormatter(new TextFormatter<>(filter));
+        attribute4Field.setTextFormatter(new TextFormatter<>(filter));
+
 
         //initial UI clear (done in order to avoid FXML manipulation)
         cleanUpPrompts();
@@ -91,6 +106,7 @@ public class NewWorkoutController {
                 if (empty || item == null || item.getName() == null) {
                     setText(null);
                 } else {
+                    cleanUpFields();
                     setText(item.getName());
                 }
             }
@@ -131,6 +147,7 @@ public class NewWorkoutController {
         });
     }
 
+
     private void disableInactiveFields() {
         attribute1Field.setDisable(true);
         attribute2Field.setDisable(true);
@@ -161,12 +178,12 @@ public class NewWorkoutController {
     }
 
     public void appendLog() {
-        Map<String,String> placeholderMap = new HashMap<>();
+        Map<String,Double> placeholderMap = new HashMap<>();
 
-        if (!attribute1Field.isDisable()) placeholderMap.put(attribute1.getText(),attribute1Field.getText());
-        if (!attribute2Field.isDisable()) placeholderMap.put(attribute2.getText(),attribute2Field.getText());
-        if (!attribute3Field.isDisable()) placeholderMap.put(attribute3.getText(),attribute3Field.getText());
-        if (!attribute4Field.isDisable()) placeholderMap.put(attribute4.getText(),attribute4Field.getText());
+        if (!attribute1Field.isDisable()) placeholderMap.put(attribute1.getText(), Double.valueOf(attribute1Field.getText()));
+        if (!attribute2Field.isDisable()) placeholderMap.put(attribute2.getText(), Double.valueOf(attribute2Field.getText()));
+        if (!attribute3Field.isDisable()) placeholderMap.put(attribute3.getText(), Double.valueOf(attribute3Field.getText()));
+        if (!attribute4Field.isDisable()) placeholderMap.put(attribute4.getText(), Double.valueOf(attribute4Field.getText()));
         activityLog.add(new LoggedActivity(activitySelector.getValue().getName(),placeholderMap));
         kcalValue = activityLog.size() * 0.67  * random.nextInt(5);
 
@@ -190,17 +207,27 @@ public class NewWorkoutController {
         MongoCollection<Document> collection = database.getCollection("logs");
         ObjectId userId = LoggedUser.LUID;
 
+        if (timestampCalendar.getValue() == null) {
+            showErrorMessage("Není upřesněno datum!");
+            return;
+        }
+
         LocalDate date = timestampCalendar.getValue();
         Instant instant = date.atStartOfDay().toInstant(ZoneOffset.UTC);
         BsonTimestamp bsonTimestamp = new BsonTimestamp((int) instant.getEpochSecond(), 0);
 
         Document logDocument = new Document("belongsTo",userId).append("timestamp",bsonTimestamp);
 
+        if (activityLog.size() == 0) {
+            showErrorMessage("Záznam je prádzný!");
+            return;
+        }
+
         for (LoggedActivity arrayElement: activityLog) {
             String activityName = arrayElement.getName();
-            for (Map.Entry<String,String> entry : arrayElement.getParameters().entrySet()) {
+            for (Map.Entry<String,Double> entry : arrayElement.getParameters().entrySet()) {
                 String key = entry.getKey();
-                String value = entry.getValue();
+                Double value = entry.getValue();
 
                 logDocument.append(key+activityName,value);
             }
@@ -225,5 +252,13 @@ public class NewWorkoutController {
         cleanUpPrompts();
         cleanUpFields();
 
+    }
+
+    private void showErrorMessage(String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Chyba při logování!");
+        alert.setHeaderText("Chyba při logování!");
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }
