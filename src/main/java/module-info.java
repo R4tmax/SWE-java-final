@@ -8,6 +8,7 @@ module cz.vse.nulltracker.nulltracker {
     requires org.json;
 
     opens cz.vse.nulltracker.nulltracker.core to javafx.fxml;
+    opens cz.vse.nulltracker.nulltracker.database to com.google.gson;
     exports cz.vse.nulltracker.nulltracker.core;
     exports cz.vse.nulltracker.nulltracker.database;
 }

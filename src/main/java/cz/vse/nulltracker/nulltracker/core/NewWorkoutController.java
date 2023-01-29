@@ -1,9 +1,6 @@
 package cz.vse.nulltracker.nulltracker.core;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+import com.google.gson.*;
 import com.mongodb.client.MongoCollection;
 import cz.vse.nulltracker.nulltracker.database.LoggedActivity;
 import cz.vse.nulltracker.nulltracker.database.LoggedUser;
@@ -324,15 +321,11 @@ public class NewWorkoutController {
             return;
         }
 
-        for (LoggedActivity arrayElement: activityLog) {
-            String activityName = arrayElement.getName();
-            for (Map.Entry<String,Double> entry : arrayElement.getParameters().entrySet()) {
-                String key = entry.getKey();
-                Double value = entry.getValue();
-
-                logDocument.append(key+activityName,value);
-            }
+        Document activities = new Document();
+        for (LoggedActivity activity : activityLog) {
+            activities.append(activity.getName(),activity.getParameters());
         }
+        logDocument.append("activities",activities);
 
         logDocument.append("KCAL",kcalValue);
 
@@ -407,6 +400,7 @@ public class NewWorkoutController {
             summaryVBox.getChildren().add(loggedActivityHBox);
         });
         kcalText.setText("Celkem " + kcalValue + " kcal");
+
     }
 
 
