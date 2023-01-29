@@ -12,6 +12,12 @@ import java.util.ArrayList;
 import java.util.Map;
 
 
+/**
+ * @author Michal Průcha
+ * @version Last refactor on 27.01.2023
+ *
+ * <p> Controller for the allExercises_view</p>
+ */
 public class AllExercisesController {
 
     public VBox mainListOfExercises;
@@ -21,6 +27,14 @@ public class AllExercisesController {
     public Text descriptionText;
 
 
+    /**
+     * Accesses the exercises JSON and reformats the data
+     * into JavaFX compliant dynamic structure.
+     *
+     * Re pareses the data to create interactive list
+     *
+     * @throws FileNotFoundException If underlying file does not exist
+     */
     public void initialize() throws FileNotFoundException {
 
 
