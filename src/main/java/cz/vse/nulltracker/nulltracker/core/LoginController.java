@@ -17,7 +17,7 @@ import java.util.Objects;
 import static cz.vse.nulltracker.nulltracker.database.DatabaseHandler.database;
 
 /**
- * @author Martin Kadlec, Michal Průcha
+ * @author Martin Kadlec, Michal Průcha, Michal Ngyuen, Maximilián Staněk
  * @version Last refactor 25.1
  * <p>
  * Controller for the login_view FXML file.
@@ -30,12 +30,19 @@ public class LoginController {
     public TextField emailInput;
     public PasswordField passwordInput;
     private final Stage stage = Main.getStage();
+
+    /**
+     * Redirects user to the registration screen.
+     */
     @FXML
     private void linkToRegistration() {
         Main main = (Main) stage.getUserData();
         main.navigateTo("registration");
     }
 
+    /**
+     * Redirects user to the login screen
+     */
     @FXML
     private void linkToDashboard() {
         Main main = (Main) stage.getUserData();
@@ -59,8 +66,6 @@ public class LoginController {
             showErrorMessage("Vyplňte všechna požadovaná pole.");
             return;
         }
-
-
 
 
         try  {
@@ -90,6 +95,11 @@ public class LoginController {
 
     }
 
+    /**
+     * Warns user of incorrect login behavior.
+     *
+     * @param message Message to be displayed to the user
+     */
     private void showErrorMessage(String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Chyba při přihlášení!");

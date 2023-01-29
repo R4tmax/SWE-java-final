@@ -194,6 +194,9 @@ public class NewWorkoutController {
     }
 
 
+    /**
+     * Redirects the user to the history screen.
+     */
     public void linkToHistory() {
         Main main = (Main) stage.getUserData();
         main.navigateTo("history");
