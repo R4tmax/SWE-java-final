@@ -120,7 +120,7 @@ public class RegistrationController {
      * @param passToCheck String with the password to be validated
      * @return Boolean representation of the password evaluation, false if criteria is not met, true if password is usable
      */
-    private boolean isPassSafe (String passToCheck) {
+    protected boolean isPassSafe (String passToCheck) {
 
         boolean hasDigit = false;
         boolean hasLetter = false;

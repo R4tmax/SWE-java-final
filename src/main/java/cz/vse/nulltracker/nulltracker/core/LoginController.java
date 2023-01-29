@@ -54,10 +54,17 @@ public class LoginController {
         String login = emailInput.getText();
         String pass = passwordInput.getText();
 
+        submitButton.setOnAction(e ->
+        {
+         attemptLogin();
+        }
+        );
+
         if (login.isEmpty() || pass.isEmpty()) {
             showErrorMessage("Vyplňte všechna požadovaná pole.");
             return;
         }
+
 
 
 
