@@ -6,9 +6,13 @@ import cz.vse.nulltracker.nulltracker.database.LoggedUser;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.util.Duration;
 import org.bson.Document;
 
+import java.time.format.TextStyle;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -19,16 +23,13 @@ import static cz.vse.nulltracker.nulltracker.database.DatabaseHandler.database;
 public class HistoryController {
 
 
-    private final MongoCollection<Document> logsCollection = database.getCollection("logs");
-    private List<Document> allUserLogs;
+    private static final MongoCollection<Document> logsCollection = database.getCollection("logs");
+    private static List<Document> allUserLogs;
+    public VBox listOfWorkouts;
 
 
     public void initialize () {
-        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(15), event -> updateCollection()));
-        timeline.setCycleCount(Animation.INDEFINITE);
-        timeline.play();
-
-        updateCollection();
+        refreshHistory();
     }
 
     public void updateCollection() {
@@ -47,10 +48,20 @@ public class HistoryController {
 
         if (allUserLogs == null) return;
 
-        for (Document log: allUserLogs) {
+        allUserLogs.forEach(log -> {
             for (Map.Entry<String, Object> entry : log.entrySet()) {
                 System.out.println(entry.getKey() + ": " + entry.getValue());
+                HBox workout = new HBox();
+                Text text = new Text("Hehe");
+                workout.getChildren().add(text);
+                listOfWorkouts.getChildren().add(workout);
             }
-        }
+        });
     }
+
+     public void refreshHistory() {
+        updateCollection();
+        printCollection();
+    }
+
 }
