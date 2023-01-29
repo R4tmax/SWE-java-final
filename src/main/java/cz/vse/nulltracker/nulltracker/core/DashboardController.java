@@ -18,6 +18,7 @@ import static com.mongodb.client.model.Accumulators.sum;
 import static com.mongodb.client.model.Aggregates.*;
 import static com.mongodb.client.model.Filters.*;
 import static com.mongodb.client.model.Projections.*;
+import static com.mongodb.client.model.Sorts.descending;
 import static cz.vse.nulltracker.nulltracker.database.DatabaseHandler.database;
 
 /**
@@ -46,7 +47,7 @@ public class DashboardController {
                 gte("date", new Date(System.currentTimeMillis() - 7 * 24 * 60 * 60 * 1000)));
 
         // Use the "find" method of the userLogsCollection to retrieve the filtered documents
-        List<Document> filteredUserLogs = userLogsCollection.find(filter).sort(Sorts.descending("timestamp")).into(new ArrayList<>());
+        List<Document> filteredUserLogs = userLogsCollection.find(filter).sort(descending("timestamp")).into(new ArrayList<>());
 
         // Initialize a variable to keep the sum of all "time" values
         double totalTime = 0;
@@ -67,11 +68,11 @@ public class DashboardController {
 
     public void getKcalsForUsers () {
 
-
         List<Bson> pipeline = Arrays.asList(
                 lookup("users", "belongsTo", "_id", "user"),
                 unwind("$user"),
                 group("$user.name", sum("KCAL", "$KCAL")),
+                sort(descending("Total KCAL")),
                 project(new Document("_id", 0).append("User Name", "$_id").append("Total KCAL", "$KCAL"))
         );
 
