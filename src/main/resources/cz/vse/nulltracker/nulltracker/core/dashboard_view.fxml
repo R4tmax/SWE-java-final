@@ -166,4 +166,37 @@
          </children>
       </HBox>
    </children>
+
+   <Button mnemonicParsing="false" onMouseClicked="#calculateUserMinutes" text="calc">
+      <graphic>
+         <ImageView fitHeight="9.0" fitWidth="9.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@icons/plus_icon_white@2x.png" />
+            </image>
+         </ImageView>
+      </graphic>
+      <VBox.margin>
+         <Insets top="25.0" />
+      </VBox.margin>
+      <cursor>
+         <Cursor fx:constant="HAND" />
+      </cursor>
+   </Button>
+
+   <Button mnemonicParsing="false" onMouseClicked="#getKcalsForUsers" text="getKcal">
+      <graphic>
+         <ImageView fitHeight="9.0" fitWidth="9.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@icons/plus_icon_white@2x.png" />
+            </image>
+         </ImageView>
+      </graphic>
+      <VBox.margin>
+         <Insets top="25.0" />
+      </VBox.margin>
+      <cursor>
+         <Cursor fx:constant="HAND" />
+      </cursor>
+   </Button>
+
 </VBox>
