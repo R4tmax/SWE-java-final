@@ -28,7 +28,7 @@
                </HBox.margin></Hyperlink>
             <Hyperlink layoutX="185.0" layoutY="10.0" text="Komunita" textFill="WHITE" />
             <Region layoutX="116.0" layoutY="10.0" minWidth="30.0" HBox.hgrow="ALWAYS" />
-            <Hyperlink layoutX="282.0" layoutY="10.0" text="Jméno Příjmení" textFill="WHITE" fx:id="userTracker" />
+            <Hyperlink layoutX="282.0" layoutY="10.0" text="Jméno Příjmení" textFill="WHITE" fx:id="userTracker" userData="history" onAction="#linkTo" />
          </children>
       </HBox>
    </children>
