@@ -4,6 +4,7 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;
 import org.bson.Document;
 import org.bson.conversions.Bson;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.Objects;
@@ -13,6 +14,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class RegistrationTest {
     String mainErrorMessage = null; //can save error message here
+
+    @BeforeEach
+    public void resetMEM () {
+        mainErrorMessage = null;
+    }
 
 
     private Document registrationAbstraction (String name, String login, String pass, String secondPass) {
@@ -24,25 +30,21 @@ class RegistrationTest {
             Document entry = userCollection.find(filter).first();
 
             if (entry != null) {
-                System.out.println("Existujici záznam"); //probably not needed
                 mainErrorMessage = "Existujici záznam";
                 return null;
             }
 
             if (!login.matches("^(([^<>()\\[\\]\\\\.,;:\\s@\"]+(\\.[^<>()\\[\\]\\\\.,;:\\s@\"]+)*)|(\".+\"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$")) {
-                System.out.println("nesprávný formát emailu");
                 mainErrorMessage = "nesprávný formát emailu";
                 return null;
             }
 
             if (!Objects.equals(pass, secondPass)) {
-                System.out.println("hesla se neshodují");
                 mainErrorMessage = "hesla se neshodují";
                 return null;
             }
 
             if (!isPassSafe(pass)) {
-                System.out.println("Slabé heslo");
                 mainErrorMessage = "Slabé heslo";
                 return null;
             }
