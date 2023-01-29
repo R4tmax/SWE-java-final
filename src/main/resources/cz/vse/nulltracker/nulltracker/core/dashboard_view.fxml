@@ -11,6 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
+<?import javafx.scene.text.TextFlow?>
 
 <VBox alignment="TOP_CENTER" stylesheets="@style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cz.vse.nulltracker.nulltracker.core.DashboardController">
    <children>
@@ -41,21 +42,21 @@
                <children>
                   <VBox>
                      <children>
-                        <Text fill="WHITE" lineSpacing="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="114 minut">
+                        <Text fx:id="minutesText" fill="WHITE" lineSpacing="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="114 minut">
                            <font>
                               <Font size="40.0" />
                            </font>
                            <VBox.margin>
-                              <Insets bottom="3.0" />
+                              <Insets bottom="10.0" />
                            </VBox.margin>
                         </Text>
-                        <Text fill="WHITE" layoutX="38.0" layoutY="73.0" strokeType="OUTSIDE" strokeWidth="0.0" text="strávených cvičením tento týden">
+                        <Text fill="WHITE" layoutX="38.0" layoutY="73.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="opacity-80" text="strávených cvičením poslední týden">
                            <VBox.margin>
                               <Insets />
                            </VBox.margin>
                         </Text>
                         <Region prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
-                        <HBox>
+                        <HBox visible="false">
                            <children>
                               <Text fill="WHITE" opacity="0.7" strokeType="OUTSIDE" strokeWidth="0.0" text="PO" />
                               <Region HBox.hgrow="ALWAYS" />
@@ -79,41 +80,30 @@
                   </VBox>
                </children>
             </StackPane>
-            <StackPane layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="217.0" prefWidth="340.0" style="-fx-background-color: black; -fx-background-radius: 20px;">
+            <StackPane layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="217.0" prefWidth="340.0" style="-fx-background-color: black; -fx-background-radius: 20px;" HBox.hgrow="NEVER">
                <children>
                   <VBox>
                      <children>
-                        <Text fill="WHITE" lineSpacing="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="114 minut">
+                        <Text fill="WHITE" lineSpacing="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="TOP 5">
                            <font>
                               <Font size="40.0" />
                            </font>
                            <VBox.margin>
-                              <Insets bottom="3.0" />
+                              <Insets bottom="10.0" />
                            </VBox.margin>
                         </Text>
-                        <Text fill="WHITE" layoutX="38.0" layoutY="73.0" strokeType="OUTSIDE" strokeWidth="0.0" text="strávených cvičením tento týden">
+                        <VBox fx:id="leaderboard" opacity="0.8" prefHeight="113.0" prefWidth="282.0" styleClass="leaderboard">
                            <VBox.margin>
                               <Insets />
                            </VBox.margin>
-                        </Text>
-                        <Region prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
-                        <HBox>
                            <children>
-                              <Text fill="WHITE" opacity="0.7" strokeType="OUTSIDE" strokeWidth="0.0" text="PO" />
-                              <Region HBox.hgrow="ALWAYS" />
-                              <Text fill="WHITE" layoutX="10.0" layoutY="23.0" opacity="0.7" strokeType="OUTSIDE" strokeWidth="0.0" text="ÚT" />
-                              <Region layoutX="29.0" layoutY="10.0" HBox.hgrow="ALWAYS" />
-                              <Text fill="WHITE" opacity="0.7" strokeType="OUTSIDE" strokeWidth="0.0" text="ST" />
-                              <Region HBox.hgrow="ALWAYS" />
-                              <Text fill="WHITE" opacity="0.7" strokeType="OUTSIDE" strokeWidth="0.0" text="ČT" />
-                              <Region HBox.hgrow="ALWAYS" />
-                              <Text fill="WHITE" opacity="0.7" strokeType="OUTSIDE" strokeWidth="0.0" text="PÁ" />
-                              <Region HBox.hgrow="ALWAYS" />
-                              <Text fill="WHITE" opacity="0.7" strokeType="OUTSIDE" strokeWidth="0.0" text="SO" />
-                              <Region HBox.hgrow="ALWAYS" />
-                              <Text fill="WHITE" opacity="0.7" strokeType="OUTSIDE" strokeWidth="0.0" text="NE" />
+                              <HBox>
+                                 <children>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="strávených cvičením tento týden" />
+                                 </children>
+                              </HBox>
                            </children>
-                        </HBox>
+                        </VBox>
                      </children>
                      <padding>
                         <Insets bottom="18.0" left="28.0" right="30.0" top="24.0" />
@@ -121,41 +111,28 @@
                   </VBox>
                </children>
             </StackPane>
-            <StackPane layoutX="370.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="217.0" prefWidth="340.0" style="-fx-background-color: black; -fx-background-radius: 20px;">
+            <StackPane layoutX="370.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="217.0" prefWidth="340.0" style="-fx-background-color: black; -fx-background-radius: 20px;" HBox.hgrow="NEVER">
                <children>
                   <VBox>
                      <children>
-                        <Text fill="WHITE" lineSpacing="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="114 minut">
+                        <Text fx:id="activityName" fill="WHITE" lineSpacing="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Bench-press">
                            <font>
                               <Font size="40.0" />
                            </font>
                            <VBox.margin>
-                              <Insets bottom="3.0" />
+                              <Insets bottom="10.0" />
                            </VBox.margin>
                         </Text>
-                        <Text fill="WHITE" layoutX="38.0" layoutY="73.0" strokeType="OUTSIDE" strokeWidth="0.0" text="strávených cvičením tento týden">
+                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="opacity-80" text="Další cvičení">
                            <VBox.margin>
-                              <Insets />
+                              <Insets bottom="15.0" />
                            </VBox.margin>
                         </Text>
-                        <Region prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
-                        <HBox>
+                        <TextFlow lineSpacing="5.0" maxHeight="100.0" prefHeight="47.0" prefWidth="282.0" styleClass="opacity-80" VBox.vgrow="SOMETIMES">
                            <children>
-                              <Text fill="WHITE" opacity="0.7" strokeType="OUTSIDE" strokeWidth="0.0" text="PO" />
-                              <Region HBox.hgrow="ALWAYS" />
-                              <Text fill="WHITE" layoutX="10.0" layoutY="23.0" opacity="0.7" strokeType="OUTSIDE" strokeWidth="0.0" text="ÚT" />
-                              <Region layoutX="29.0" layoutY="10.0" HBox.hgrow="ALWAYS" />
-                              <Text fill="WHITE" opacity="0.7" strokeType="OUTSIDE" strokeWidth="0.0" text="ST" />
-                              <Region HBox.hgrow="ALWAYS" />
-                              <Text fill="WHITE" opacity="0.7" strokeType="OUTSIDE" strokeWidth="0.0" text="ČT" />
-                              <Region HBox.hgrow="ALWAYS" />
-                              <Text fill="WHITE" opacity="0.7" strokeType="OUTSIDE" strokeWidth="0.0" text="PÁ" />
-                              <Region HBox.hgrow="ALWAYS" />
-                              <Text fill="WHITE" opacity="0.7" strokeType="OUTSIDE" strokeWidth="0.0" text="SO" />
-                              <Region HBox.hgrow="ALWAYS" />
-                              <Text fill="WHITE" opacity="0.7" strokeType="OUTSIDE" strokeWidth="0.0" text="NE" />
+                              <Text fx:id="activityDesc" fill="WHITE" lineSpacing="20.0" strokeType="OUTSIDE" strokeWidth="0.0" />
                            </children>
-                        </HBox>
+                        </TextFlow>
                      </children>
                      <padding>
                         <Insets bottom="18.0" left="28.0" right="30.0" top="24.0" />
@@ -167,36 +144,6 @@
       </HBox>
    </children>
 
-   <Button mnemonicParsing="false" onMouseClicked="#calculateUserMinutes" text="calc">
-      <graphic>
-         <ImageView fitHeight="9.0" fitWidth="9.0" pickOnBounds="true" preserveRatio="true">
-            <image>
-               <Image url="@icons/plus_icon_white@2x.png" />
-            </image>
-         </ImageView>
-      </graphic>
-      <VBox.margin>
-         <Insets top="25.0" />
-      </VBox.margin>
-      <cursor>
-         <Cursor fx:constant="HAND" />
-      </cursor>
-   </Button>
 
-   <Button mnemonicParsing="false" onMouseClicked="#getKcalsForUsers" text="getKcal">
-      <graphic>
-         <ImageView fitHeight="9.0" fitWidth="9.0" pickOnBounds="true" preserveRatio="true">
-            <image>
-               <Image url="@icons/plus_icon_white@2x.png" />
-            </image>
-         </ImageView>
-      </graphic>
-      <VBox.margin>
-         <Insets top="25.0" />
-      </VBox.margin>
-      <cursor>
-         <Cursor fx:constant="HAND" />
-      </cursor>
-   </Button>
 
 </VBox>

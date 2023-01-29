@@ -119,3 +119,11 @@
     -fx-background-size: cover;
     -fx-background-position: center;
 }
+
+.white {
+    -fx-fill: #ffffff;
+}
+
+.leaderboard {
+    -fx-fill: #ffffff;
+}
