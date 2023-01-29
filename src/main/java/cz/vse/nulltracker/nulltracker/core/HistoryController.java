@@ -1,6 +1,7 @@
 package cz.vse.nulltracker.nulltracker.core;
 
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.model.Sorts;
 import cz.vse.nulltracker.nulltracker.database.LoggedUser;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
@@ -35,7 +36,7 @@ public class HistoryController {
         if (LoggedUser.LUID == null) return;
 
         try {
-            allUserLogs = logsCollection.find(eq("belongsTo", LoggedUser.LUID)).into(new ArrayList<>());
+            allUserLogs = logsCollection.find(eq("belongsTo", LoggedUser.LUID)).sort(Sorts.descending("timestamp")).into(new ArrayList<>());
         } catch (Exception e) {
             System.out.println("DB error" + e);
         }
