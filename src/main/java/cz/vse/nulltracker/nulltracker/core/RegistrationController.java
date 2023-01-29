@@ -76,6 +76,10 @@ public class RegistrationController {
 
             Document entry = collection.find(filter).first();
 
+            if (name.isEmpty() || login.isEmpty() || pass.isEmpty() || secondPass.isEmpty()) {
+                infoMessage.setText("Prosím, vyplňte všechna požadovaná pole.");
+                return;
+            }
 
             if (entry != null) {
                 infoMessage.setText("Uživatel již existuje.");
