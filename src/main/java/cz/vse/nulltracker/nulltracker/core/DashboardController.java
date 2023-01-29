@@ -15,9 +15,9 @@ import org.bson.types.ObjectId;
 import java.util.*;
 
 import static com.mongodb.client.model.Accumulators.sum;
-import static com.mongodb.client.model.Aggregates.group;
-import static com.mongodb.client.model.Aggregates.match;
+import static com.mongodb.client.model.Aggregates.*;
 import static com.mongodb.client.model.Filters.*;
+import static com.mongodb.client.model.Projections.*;
 import static cz.vse.nulltracker.nulltracker.database.DatabaseHandler.database;
 
 /**
@@ -68,16 +68,21 @@ public class DashboardController {
     public void getKcalsForUsers () {
 
 
-        List<Bson> pipeline = List.of(
-                group("$belongsTo", sum("KCAL", "$KCAL"))
+        List<Bson> pipeline = Arrays.asList(
+                lookup("users", "belongsTo", "_id", "user"),
+                unwind("$user"),
+                group("$user.name", sum("KCAL", "$KCAL")),
+                project(new Document("_id", 0).append("User Name", "$_id").append("Total KCAL", "$KCAL"))
         );
 
         AggregateIterable<Document> result = userLogsCollection.aggregate(pipeline);
 
         for (Document document : result) {
-            Double totalKCAL = (Double) document.get("KCAL");
-            System.out.println("Total KCAL: " + totalKCAL);
+            String userName = (String) document.get("User Name");
+            Double totalKCAL = (Double) document.get("Total KCAL");
+            System.out.println("User: " + userName + " Total KCAL: " + totalKCAL);
         }
+
 
     }
 
