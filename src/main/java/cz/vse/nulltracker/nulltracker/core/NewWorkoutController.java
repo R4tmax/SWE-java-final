@@ -311,10 +311,7 @@ public class NewWorkoutController {
         }
 
         LocalDate date = timestampCalendar.getValue();
-        Instant instant = date.atStartOfDay().toInstant(ZoneOffset.UTC);
-        BsonTimestamp bsonTimestamp = new BsonTimestamp((int) instant.getEpochSecond(), 0);
-
-        Document logDocument = new Document("belongsTo",userId).append("timestamp",bsonTimestamp);
+        Document logDocument = new Document("belongsTo",userId).append("date",date);
 
         if (activityLog.size() == 0) {
             showErrorMessage("Záznam je prádzný!");
