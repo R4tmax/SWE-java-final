@@ -2,6 +2,7 @@ package cz.vse.nulltracker.nulltracker.core;
 
 import com.mongodb.client.AggregateIterable;
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.model.Accumulators;
 import com.mongodb.client.model.Aggregates;
 import com.mongodb.client.model.Sorts;
 import cz.vse.nulltracker.nulltracker.database.LoggedUser;
@@ -9,10 +10,13 @@ import javafx.event.ActionEvent;
 import javafx.stage.Stage;
 import org.bson.Document;
 import org.bson.conversions.Bson;
+import org.bson.types.ObjectId;
 
 import java.util.*;
 
 import static com.mongodb.client.model.Accumulators.sum;
+import static com.mongodb.client.model.Aggregates.group;
+import static com.mongodb.client.model.Aggregates.match;
 import static com.mongodb.client.model.Filters.*;
 import static cz.vse.nulltracker.nulltracker.database.DatabaseHandler.database;
 
@@ -62,19 +66,17 @@ public class DashboardController {
     }
 
     public void getKcalsForUsers () {
-        // Create the pipeline
-        List<Bson> pipeline = Arrays.asList(
-                Aggregates.lookup("logs", "login", "belongsTo", "logs"),
-                Aggregates.unwind("$logs"),
-                Aggregates.group("$login", sum("KCAL", "$logs.KCAL"))
+
+
+        List<Bson> pipeline = List.of(
+                group("$belongsTo", sum("KCAL", "$KCAL"))
         );
 
-// Execute the aggregate operation
-        AggregateIterable<Document> result = usersCollection.aggregate(pipeline);
+        AggregateIterable<Document> result = userLogsCollection.aggregate(pipeline);
 
-// Loop through the result to get the sum of KCAL for each user
-        for (Document doc : result) {
-            System.out.println("User: " + doc.get("_id") + " Total KCAL: " + doc.get("KCAL"));
+        for (Document document : result) {
+            Double totalKCAL = (Double) document.get("KCAL");
+            System.out.println("Total KCAL: " + totalKCAL);
         }
 
     }
