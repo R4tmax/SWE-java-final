@@ -15,7 +15,7 @@ import java.util.Objects;
 import static cz.vse.nulltracker.nulltracker.database.DatabaseHandler.database;
 
 /**
- * @author Martin Kadlec, Michal Průcha
+ * @author Martin Kadlec, Michal Průcha, Michal Nguyen, Maxmilián Staněk
  * @version Last refactor on 25.1
  *
  * <p>Controller for the registration_view FXML file.
@@ -32,12 +32,18 @@ public class RegistrationController {
     private final Stage stage = Main.getStage();
     public Label infoMessage;
 
+    /**
+     * Redirects user to the Login screen.
+     */
     @FXML
     private void linkToLogin() {
         Main main = (Main) stage.getUserData();
         main.navigateTo("login");
     }
 
+    /**
+     * Redirects user to the Dashboard screen of the application
+     */
     @FXML
     private void linkToDashboard() {
         Main main = (Main) stage.getUserData();
