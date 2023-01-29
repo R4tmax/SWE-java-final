@@ -15,6 +15,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import org.bson.BsonTimestamp;
 import org.bson.Document;
 import org.bson.types.ObjectId;
@@ -49,6 +50,8 @@ import static cz.vse.nulltracker.nulltracker.database.DatabaseHandler.database;
  * @see cz.vse.nulltracker.nulltracker.database.DatabaseHandler
  */
 public class NewWorkoutController {
+
+    private final Stage stage = Main.getStage();
     public ComboBox<Exercise> activitySelector;
     public DatePicker timestampCalendar;
     public Label attribute1;
@@ -188,10 +191,13 @@ public class NewWorkoutController {
             } else timestampCalendar.getEditor().clear();
         });
 
-
-
     }
 
+
+    public void linkToHistory() {
+        Main main = (Main) stage.getUserData();
+        main.navigateTo("history");
+    }
 
     /**
      * Disables all text fields.
@@ -334,7 +340,6 @@ public class NewWorkoutController {
         }
 
 
-        //TODO: redirect to log history/dashboard
         System.out.println("Log creation successful!");
 
         timestampCalendar.getEditor().clear();
@@ -347,6 +352,8 @@ public class NewWorkoutController {
         dateText.setText("");
         refreshSummaryVBox();
         recalculateKcal();
+
+        linkToHistory();
     }
 
     /**
