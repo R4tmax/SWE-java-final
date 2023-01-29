@@ -71,7 +71,7 @@ public class LoginController {
         try  {
             MongoCollection<Document> collection = database.getCollection("users");
 
-            Bson filter = Filters.regex("login", login);
+            Bson filter = Filters.eq("login", login);
 
             Document entry = collection.find(filter).first();
 
