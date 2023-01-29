@@ -1,5 +1,9 @@
 package cz.vse.nulltracker.nulltracker.core;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.mongodb.client.AggregateIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Accumulators;
@@ -12,6 +16,9 @@ import org.bson.Document;
 import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.util.*;
 
 import static com.mongodb.client.model.Accumulators.sum;
@@ -31,6 +38,7 @@ import static cz.vse.nulltracker.nulltracker.database.DatabaseHandler.database;
  * MongoDB remote system.</p>
  */
 public class DashboardController {
+    private ArrayList<Exercise> allExercises = new ArrayList<>();
     private final Stage stage = Main.getStage();
     public void toNewWorkoutPage(ActionEvent actionEvent) {
         Main main = (Main) stage.getUserData();
@@ -38,7 +46,33 @@ public class DashboardController {
     }
 
     private static final MongoCollection<Document> userLogsCollection = database.getCollection("logs");
-    private static final MongoCollection<Document> usersCollection = database.getCollection("users");
+    //private static final MongoCollection<Document> usersCollection = database.getCollection("users");
+
+    public void initialize () throws FileNotFoundException {
+        //read and parse the contents of the JSON
+        File input = new File("src/main/resources/cz/vse/nulltracker/nulltracker/core/exercises.json");
+        JsonElement fileElement = JsonParser.parseReader(new FileReader(input));
+        JsonObject fileObject = fileElement.getAsJsonObject();
+        JsonArray categories = fileObject.get("workouts").getAsJsonArray();
+
+        categories.forEach(category -> {
+            JsonObject categoryObject = category.getAsJsonObject();
+            categoryObject.get("exercises").getAsJsonArray().forEach(exercise -> {
+                JsonObject exerciseObject = exercise.getAsJsonObject();
+                String name = exerciseObject.get("name").getAsString();
+                String description = exerciseObject.get("description").getAsString();
+                ArrayList<String> parameters = new ArrayList<>();
+                for (Map.Entry<String, JsonElement> entry : exerciseObject.get("parameters").getAsJsonObject().entrySet()) {
+                    parameters.add(entry.getKey());
+                }
+                ArrayList<String> prompts = new ArrayList<>();
+                for (Map.Entry<String, JsonElement> entry : exerciseObject.get("parameters").getAsJsonObject().entrySet()) {
+                    prompts.add(entry.getValue().getAsString());
+                }
+                allExercises.add(new Exercise(name, description, parameters,prompts));
+            });
+        });
+    }
 
     public void calculateUserMinutes () {
         // Define the BSON query to find the documents belonging to the logged in user
@@ -84,6 +118,13 @@ public class DashboardController {
             System.out.println("User: " + userName + " Total KCAL: " + totalKCAL);
         }
 
+    }
+
+    public void recommendNextExercise () {
+        Random random = new Random();
+        int selector = random.nextInt(allExercises.size());
+        String activityName = allExercises.get(selector).getName();
+        String activityDesc = allExercises.get(selector).getDescription();
 
     }
 
