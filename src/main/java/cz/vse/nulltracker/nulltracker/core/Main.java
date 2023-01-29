@@ -16,6 +16,7 @@ public class Main extends Application {
     private Scene newWorkout_scene;
     private Scene history_scene;
     private HistoryController historyController;
+    private DashboardController dashboardController;
     public static void main(String[] args) {
         launch();
     }
@@ -27,9 +28,13 @@ public class Main extends Application {
 
         login_scene = new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("login_view.fxml"))));
         registration_scene = new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("registration_view.fxml"))));
-        dashboard_scene = new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("dashboard_view.fxml"))));
         allExercises_scene = new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("allExercises_view.fxml"))));
         newWorkout_scene = new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("newWorkout_view.fxml"))));
+
+        FXMLLoader dashboardLoader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("dashboard_view.fxml")));
+        dashboard_scene = new Scene(dashboardLoader.load());
+        dashboardController = dashboardLoader.getController();
+
 
         FXMLLoader historyLoader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("history_view.fxml")));
         history_scene = new Scene(historyLoader.load());
@@ -51,7 +56,10 @@ public class Main extends Application {
 
         switch (desiredLocation) {
             case "allExercises" -> stage.setScene(allExercises_scene);
-            case "dashboard" -> stage.setScene(dashboard_scene);
+            case "dashboard" -> {
+                stage.setScene(dashboard_scene);
+                dashboardController.refreshDashboard();
+            }
             case "login" -> stage.setScene(login_scene);
             case "registration" -> stage.setScene(registration_scene);
             case "newWorkout" -> stage.setScene(newWorkout_scene);

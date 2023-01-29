@@ -11,6 +11,11 @@ import com.mongodb.client.model.Aggregates;
 import com.mongodb.client.model.Sorts;
 import cz.vse.nulltracker.nulltracker.database.LoggedUser;
 import javafx.event.ActionEvent;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.bson.Document;
 import org.bson.conversions.Bson;
@@ -38,6 +43,10 @@ import static cz.vse.nulltracker.nulltracker.database.DatabaseHandler.database;
  * MongoDB remote system.</p>
  */
 public class DashboardController {
+    public Text minutesText;
+    public VBox leaderboard;
+    public Text activityName;
+    public Text activityDesc;
     private ArrayList<Exercise> allExercises = new ArrayList<>();
     private final Stage stage = Main.getStage();
     public void toNewWorkoutPage(ActionEvent actionEvent) {
@@ -72,6 +81,7 @@ public class DashboardController {
                 allExercises.add(new Exercise(name, description, parameters,prompts));
             });
         });
+        recommendNextExercise();
     }
 
     public void calculateUserMinutes () {
@@ -84,7 +94,7 @@ public class DashboardController {
         List<Document> filteredUserLogs = userLogsCollection.find(filter).sort(descending("timestamp")).into(new ArrayList<>());
 
         // Initialize a variable to keep the sum of all "time" values
-        double totalTime = 0;
+        int totalTime = 0;
 
         // Loop through each document, extract its "activities" field,
         // and sum the "time" values of each activity
@@ -96,26 +106,48 @@ public class DashboardController {
             }
         }
 
-        // Print the sum of all "time" values
-        System.out.println("Total time: " + totalTime);
+        minutesText.setText(totalTime + " minut");
+
     }
 
     public void getKcalsForUsers () {
+        leaderboard.getChildren().clear();
+        leaderboard.setSpacing(6);
 
         List<Bson> pipeline = Arrays.asList(
                 lookup("users", "belongsTo", "_id", "user"),
                 unwind("$user"),
                 group("$user.name", sum("KCAL", "$KCAL")),
                 sort(descending("Total KCAL")),
+                limit(5),
                 project(new Document("_id", 0).append("User Name", "$_id").append("Total KCAL", "$KCAL"))
         );
 
         AggregateIterable<Document> result = userLogsCollection.aggregate(pipeline);
 
+        int rank = 1;
         for (Document document : result) {
             String userName = (String) document.get("User Name");
             Double totalKCAL = (Double) document.get("Total KCAL");
-            System.out.println("User: " + userName + " Total KCAL: " + totalKCAL);
+
+            HBox userBox = new HBox();
+            userBox.setSpacing(10);
+
+            Text rankText = new Text(rank + ". ");
+            Text userNameText = new Text(userName);
+            Text userKCALText = new Text(totalKCAL + " KCAL");
+
+            rankText.getStyleClass().add("white");
+            userNameText.getStyleClass().add("white");
+            userKCALText.getStyleClass().add("white");
+
+            Region spacer = new Region();
+            userBox.setHgrow(spacer, Priority.ALWAYS);
+
+
+            userBox.getChildren().addAll(rankText, userNameText, spacer, userKCALText);
+            leaderboard.getChildren().add(userBox);
+            rank++;
         }
 
     }
@@ -123,9 +155,19 @@ public class DashboardController {
     public void recommendNextExercise () {
         Random random = new Random();
         int selector = random.nextInt(allExercises.size());
-        String activityName = allExercises.get(selector).getName();
-        String activityDesc = allExercises.get(selector).getDescription();
+        String name = allExercises.get(selector).getName();
+        String desc = allExercises.get(selector).getDescription();
 
+        desc = desc.substring(0, 140) + "...";
+
+        activityName.setText(name);
+        activityDesc.setText(desc);
+
+    }
+
+    public void refreshDashboard() {
+        calculateUserMinutes();
+        getKcalsForUsers();
     }
 
 }
