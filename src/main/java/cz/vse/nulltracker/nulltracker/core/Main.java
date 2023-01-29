@@ -50,10 +50,7 @@ public class Main extends Application {
             case "login" -> stage.setScene(login_scene);
             case "registration" -> stage.setScene(registration_scene);
             case "newWorkout" -> stage.setScene(newWorkout_scene);
-            case "history" -> {
-                stage.setScene(history_scene);
-                HistoryController.refreshHistory();
-            }
+            case "history" -> stage.setScene(history_scene);
 //            case "community" -> stage.setScene(community_scene);
 
             default -> System.out.println("No such link");

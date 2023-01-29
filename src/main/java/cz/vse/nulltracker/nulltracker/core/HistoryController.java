@@ -29,7 +29,10 @@ public class HistoryController {
 
 
     public void initialize () {
-        refreshHistory();
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(15), event -> refreshHistory()));
+        timeline.setCycleCount(Animation.INDEFINITE);
+        timeline.play();
+
     }
 
     public void updateCollection() {
