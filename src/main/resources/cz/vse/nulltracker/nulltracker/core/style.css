@@ -108,3 +108,14 @@
 .scroll-pane {
     -fx-background-color: transparent;
 }
+
+#login-image {
+    -fx-background-image: url("images/man.jpg");
+    -fx-background-size: cover;
+}
+
+#register-image {
+    -fx-background-image: url("images/girl.jpg");
+    -fx-background-size: cover;
+    -fx-background-position: center;
+}
