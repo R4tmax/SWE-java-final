@@ -49,20 +49,26 @@ public class HistoryController {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd. MM. yyyy");
         allUserLogs.forEach(log -> {
             VBox workoutVBox = new VBox();
+            workoutVBox.setSpacing(10);
 
             // DATE
             Date date = (Date) log.get("date");
             String formattedDate = dateFormat.format(date);
             Text dateText = new Text(formattedDate);
+            dateText.getStyleClass().add("h4");
             workoutVBox.getChildren().add(dateText);
 
+            // Activities
             Document activities = (Document) log.get("activities");
+            VBox activitiesVBox = new VBox();
+            activitiesVBox.setSpacing(10);
             activities.forEach((key, value) -> {
                 Text exerciseName = new Text(key);
-                workoutVBox.getChildren().add(exerciseName);
+                exerciseName.getStyleClass().add("p");
+                activitiesVBox.getChildren().add(exerciseName);
             });
 
-
+            workoutVBox.getChildren().add(activitiesVBox);
             listOfWorkouts.getChildren().add(workoutVBox);
         });
     }
