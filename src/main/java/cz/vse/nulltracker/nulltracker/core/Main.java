@@ -15,9 +15,11 @@ public class Main extends Application {
     private Scene allExercises_scene;
     private Scene newWorkout_scene;
     private Scene history_scene;
+    private HistoryController historyController;
     public static void main(String[] args) {
         launch();
     }
+
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -28,7 +30,10 @@ public class Main extends Application {
         dashboard_scene = new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("dashboard_view.fxml"))));
         allExercises_scene = new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("allExercises_view.fxml"))));
         newWorkout_scene = new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("newWorkout_view.fxml"))));
-        history_scene = new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("history_view.fxml"))));
+
+        FXMLLoader historyLoader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("history_view.fxml")));
+        history_scene = new Scene(historyLoader.load());
+        historyController = historyLoader.getController();
 
         stage.setUserData(this);
         stage.setWidth(1200);
@@ -50,7 +55,10 @@ public class Main extends Application {
             case "login" -> stage.setScene(login_scene);
             case "registration" -> stage.setScene(registration_scene);
             case "newWorkout" -> stage.setScene(newWorkout_scene);
-            case "history" -> stage.setScene(history_scene);
+            case "history" -> {
+                stage.setScene(history_scene);
+                historyController.refreshHistory();
+            }
 //            case "community" -> stage.setScene(community_scene);
 
             default -> System.out.println("No such link");

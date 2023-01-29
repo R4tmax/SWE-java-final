@@ -29,10 +29,7 @@ public class HistoryController {
 
 
     public void initialize () {
-        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(15), event -> refreshHistory()));
-        timeline.setCycleCount(Animation.INDEFINITE);
-        timeline.play();
-
+        refreshHistory();
     }
 
     public void updateCollection() {
@@ -50,6 +47,7 @@ public class HistoryController {
     public void printCollection() {
 
         if (allUserLogs == null) return;
+        listOfWorkouts.getChildren().clear();
 
         allUserLogs.forEach(log -> {
             for (Map.Entry<String, Object> entry : log.entrySet()) {
