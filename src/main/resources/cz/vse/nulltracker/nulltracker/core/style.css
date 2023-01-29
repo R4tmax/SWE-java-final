@@ -94,3 +94,28 @@
     -fx-text-fill: black;
     /*-fx-font-weight: 700;*/
 }
+
+.history-list {
+    -fx-border-style: none none none solid;
+    -fx-border-width: 0 0 0 2px;
+    -fx-border-color: #000000;
+}
+
+.scroll-pane > .viewport {
+    -fx-background-color: transparent;
+}
+
+.scroll-pane {
+    -fx-background-color: transparent;
+}
+
+#login-image {
+    -fx-background-image: url("images/man.jpg");
+    -fx-background-size: cover;
+}
+
+#register-image {
+    -fx-background-image: url("images/girl.jpg");
+    -fx-background-size: cover;
+    -fx-background-position: center;
+}

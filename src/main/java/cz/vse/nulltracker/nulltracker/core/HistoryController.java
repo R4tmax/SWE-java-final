@@ -46,24 +46,30 @@ public class HistoryController {
         if (allUserLogs == null) return;
         listOfWorkouts.getChildren().clear();
 
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd. MM. yyyy");
         allUserLogs.forEach(log -> {
-            HBox workout = new HBox();
-            String date = log.get("KCAL").toString();
-            SimpleDateFormat dateFormat = new SimpleDateFormat("dd. MM. yyyy");
-            System.out.println(date);
+            VBox workoutVBox = new VBox();
+            workoutVBox.setSpacing(10);
 
+            // DATE
+            Date date = (Date) log.get("date");
+            String formattedDate = dateFormat.format(date);
+            Text dateText = new Text(formattedDate);
+            dateText.getStyleClass().add("h4");
+            workoutVBox.getChildren().add(dateText);
 
-//            workout.setSpacing(10);
-//            workout.getChildren().add(new Text(log.get("timestamp").toString()));
-//            workout.getChildren().add(new Text(log.get("workoutName").toString()));
-//            workout.getChildren().add(new Text(log.get("workoutDuration").toString()));
-//            workout.getChildren().add(new Text(log.get("workoutCalories").toString()));
-//            listOfWorkouts.getChildren().add(workout);
+            // Activities
+            Document activities = (Document) log.get("activities");
+            VBox activitiesVBox = new VBox();
+            activitiesVBox.setSpacing(10);
+            activities.forEach((key, value) -> {
+                Text exerciseName = new Text(key);
+                exerciseName.getStyleClass().add("p");
+                activitiesVBox.getChildren().add(exerciseName);
+            });
 
-//            workout.getChildren().add(date);
-            listOfWorkouts.getChildren().add(workout);
-
-
+            workoutVBox.getChildren().add(activitiesVBox);
+            listOfWorkouts.getChildren().add(workoutVBox);
         });
     }
 

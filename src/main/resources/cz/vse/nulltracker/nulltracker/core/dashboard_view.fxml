@@ -19,7 +19,7 @@
          <children>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="h1" text="Dashboard" />
             <Region HBox.hgrow="ALWAYS" />
-            <Button mnemonicParsing="false" onAction="#toNewWorkoutPage" text="Přidat cvičení">
+            <Button mnemonicParsing="false" onAction="#toNewWorkoutPage" text="Přidat záznam">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
