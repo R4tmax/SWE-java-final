@@ -16,6 +16,7 @@ public class LoggedUser {
     public static String LUemail;
     public static ObjectId LUID;
 
+
     /**
      * Copies the logged data to the static variables
      *
@@ -28,5 +29,6 @@ public class LoggedUser {
         LUemail = mail;
         LUID = userId;
     }
+
 
 }
