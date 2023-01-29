@@ -3,19 +3,16 @@ package cz.vse.nulltracker.nulltracker.core;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Sorts;
 import cz.vse.nulltracker.nulltracker.database.LoggedUser;
-import javafx.animation.Animation;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import javafx.util.Duration;
+import org.bson.BsonTimestamp;
+import org.bson.BsonValue;
 import org.bson.Document;
 
-import java.time.format.TextStyle;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.security.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 import static com.mongodb.client.model.Filters.eq;
 import static cz.vse.nulltracker.nulltracker.database.DatabaseHandler.database;
@@ -50,13 +47,23 @@ public class HistoryController {
         listOfWorkouts.getChildren().clear();
 
         allUserLogs.forEach(log -> {
-            for (Map.Entry<String, Object> entry : log.entrySet()) {
-                System.out.println(entry.getKey() + ": " + entry.getValue());
-                HBox workout = new HBox();
-                Text text = new Text("Hehe");
-                workout.getChildren().add(text);
-                listOfWorkouts.getChildren().add(workout);
-            }
+            HBox workout = new HBox();
+            String date = log.get("KCAL").toString();
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd. MM. yyyy");
+            System.out.println(date);
+
+
+//            workout.setSpacing(10);
+//            workout.getChildren().add(new Text(log.get("timestamp").toString()));
+//            workout.getChildren().add(new Text(log.get("workoutName").toString()));
+//            workout.getChildren().add(new Text(log.get("workoutDuration").toString()));
+//            workout.getChildren().add(new Text(log.get("workoutCalories").toString()));
+//            listOfWorkouts.getChildren().add(workout);
+
+//            workout.getChildren().add(date);
+            listOfWorkouts.getChildren().add(workout);
+
+
         });
     }
 
