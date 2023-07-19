@@ -1,5 +1,5 @@
 # NullTracker
-# Projektová dokumentace
+# Projektová dokumentace (Obsolote)
 https://gitlab.com/FIS-VSE/4IT115/2022ZS/st1100/kadm09/nulltracker/-/wikis/Project-overview
 
 # Projektová metodika
